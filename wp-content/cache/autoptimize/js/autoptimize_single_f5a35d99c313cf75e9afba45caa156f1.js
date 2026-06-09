@@ -1,0 +1,3 @@
+document.addEventListener('DOMContentLoaded',function(){const aviso=document.getElementById('aviso-lgpd');const botaoAceitar=document.getElementById('aceitar-lgpd');const diasValidade=7;const agora=Date.now();const aceitoEm=localStorage.getItem('lgpd_aceito_em');let mostrarAviso=true;if(aceitoEm!==null){const aceitoTimestamp=parseInt(aceitoEm,10);const msPorDia=24*60*60*1000;const diferencaDias=(agora-aceitoTimestamp)/msPorDia;if(diferencaDias<diasValidade){mostrarAviso=false;}}
+if(mostrarAviso){aviso.style.display='block';}else{aviso.style.display='none';}
+botaoAceitar.addEventListener('click',function(){localStorage.setItem('lgpd_aceito_em',Date.now().toString());aviso.style.display='none';});});
