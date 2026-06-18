@@ -1,15 +1,14 @@
 services:
-
   mysql:
     image: mysql:8.0
     container_name: mktpd-mysql
     restart: unless-stopped
     command: --default-authentication-plugin=mysql_native_password
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: fabia084_wp486
-      MYSQL_USER: fabia084_wp486
-      MYSQL_PASSWORD:  Bi4noM4x*
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_DATABASE: "fabia084_wp486"
+      MYSQL_USER: "fabia084_wp486"
+      MYSQL_PASSWORD: "Bi4noM4x*"
     ports:
       - "33091:3306"
     volumes:
@@ -22,15 +21,16 @@ services:
     depends_on:
       - mysql
     environment:
-      WORDPRESS_DB_HOST: mysql:3306
-      WORDPRESS_DB_NAME: fabia084_wp486
-      WORDPRESS_DB_USER: fabia084_wp486
-      WORDPRESS_DB_PASSWORD: Bi4noM4x*
-      WORDPRESS_TABLE_PREFIX: wpxf_
+      WORDPRESS_DB_HOST: "mysql:3306"
+      WORDPRESS_DB_NAME: "fabia084_wp486"
+      WORDPRESS_DB_USER: "fabia084_wp486"
+      WORDPRESS_DB_PASSWORD: "Bi4noM4x*"
+      WORDPRESS_TABLE_PREFIX: "wpxf_"
     ports:
       - "8090:80"
     volumes:
-    - ./wp-content:/var/www/html/wp-content
+      - ./wp-content:/var/www/html/wp-content
+
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: mktpd-phpmyadmin
@@ -38,8 +38,8 @@ services:
     depends_on:
       - mysql
     environment:
-      PMA_HOST: mysql
-      MYSQL_ROOT_PASSWORD: root
+      PMA_HOST: "mysql"
+      MYSQL_ROOT_PASSWORD: "root"
     ports:
       - "8091:80"
 
