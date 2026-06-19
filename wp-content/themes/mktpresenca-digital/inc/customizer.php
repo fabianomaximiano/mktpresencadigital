@@ -36,7 +36,13 @@ function mktpd_customize_register($wp_customize) {
     mktpd_add_text_control($wp_customize, 'mktpd_home_hero_secondary_label', 'Texto do botão secundário', 'Conhecer serviços', 'mktpd_home_hero_section');
     mktpd_add_url_control($wp_customize, 'mktpd_home_hero_secondary_url', 'URL do botão secundário', home_url('/servicos/'), 'mktpd_home_hero_section');
 
-    mktpd_add_image_control($wp_customize, 'mktpd_home_hero_image', 'Imagem de fundo do Hero', 'mktpd_home_hero_section');
+    mktpd_add_image_control(
+    $wp_customize,
+    'mktpd_home_hero_image',
+    'Imagem de fundo do Hero',
+    'mktpd_home_hero_section',
+    'Recomendado: 1920x1080 px (16:9) • WebP • até 250 KB'
+);
 
     $wp_customize->add_section('mktpd_home_images_section', array(
         'title'       => 'Imagens da Home',
@@ -45,8 +51,22 @@ function mktpd_customize_register($wp_customize) {
         'priority'    => 20,
     ));
 
-    mktpd_add_image_control($wp_customize, 'mktpd_home_about_image', 'Imagem da seção Quem Somos', 'mktpd_home_images_section');
-    mktpd_add_image_control($wp_customize, 'mktpd_home_stats_image', 'Imagem de fundo dos indicadores', 'mktpd_home_images_section');
+        mktpd_add_image_control(
+        $wp_customize,
+        'mktpd_home_about_image',
+        'Imagem da seção Quem Somos',
+        'mktpd_home_images_section',
+        'Recomendado: 900x700 px (4:3) • WebP • até 120 KB'
+    );
+
+    mktpd_add_image_control(
+        $wp_customize,
+        'mktpd_home_stats_image',
+        'Imagem de fundo dos indicadores',
+        'mktpd_home_images_section',
+        'Recomendado: 1920x500 px • panorâmica • WebP • até 180 KB'
+    );
+
 }
 add_action('customize_register', 'mktpd_customize_register');
 
