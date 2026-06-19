@@ -2,19 +2,20 @@
 .site-footer {
     background: #090b10;
     color: #fff;
-    padding: 70px 0 24px;
+    padding: 76px 0 26px;
 }
 
 .footer-grid {
     display: grid;
     grid-template-columns: 1.4fr 1fr 1fr 1fr;
-    gap: 34px;
-    margin-bottom: 48px;
+    gap: 38px;
+    margin-bottom: 52px;
 }
 
 .footer-brand h3 {
     font-size: 26px;
-    margin-bottom: 12px;
+    margin: 0 0 14px;
+    font-weight: 900;
 }
 
 .footer-brand h3 span {
@@ -28,9 +29,15 @@
     font-size: 15px;
 }
 
+.footer-brand p,
+.footer-col p {
+    margin: 0;
+}
+
 .footer-col h4 {
-    margin-bottom: 18px;
+    margin: 0 0 20px;
     font-size: 18px;
+    font-weight: 900;
 }
 
 .footer-col ul {
@@ -41,13 +48,17 @@
     padding: 0;
 }
 
+.footer-col a {
+    transition: .2s ease;
+}
+
 .footer-col a:hover {
     color: var(--primary);
 }
 
 .footer-bottom {
     border-top: 1px solid rgba(255,255,255,.08);
-    padding-top: 20px;
+    padding-top: 22px;
     text-align: center;
     color: rgba(255,255,255,.55);
     font-size: 14px;
@@ -60,7 +71,12 @@
 }
 
 @media (max-width: 640px) {
+    .site-footer {
+        padding: 60px 0 24px;
+    }
+
     .footer-grid {
         grid-template-columns: 1fr;
+        gap: 32px;
     }
 }

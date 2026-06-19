@@ -80,34 +80,46 @@ function mktpd_enqueue_home_dynamic_styles() {
         return;
     }
 
-    $dynamic_images = array(
-        '.hero' => array(
-            'theme_mod' => 'mktpd_home_hero_image',
-            'overlay'   => 'linear-gradient(90deg, rgba(0,0,0,.78), rgba(0,0,0,.44), rgba(0,0,0,.72))',
+    $images = array(
+        '.hero'                     => array(
+            'mod'      => 'mktpd_home_hero_image',
+            'gradient' => 'linear-gradient(90deg, rgba(0,0,0,.78), rgba(0,0,0,.44), rgba(0,0,0,.72))',
         ),
-        '.about-image' => array(
-            'theme_mod' => 'mktpd_home_about_image',
-            'overlay'   => 'linear-gradient(rgba(0,0,0,.08), rgba(0,0,0,.1))',
+        '.about-image'              => array(
+            'mod'      => 'mktpd_home_about_image',
+            'gradient' => 'linear-gradient(rgba(0,0,0,.08), rgba(0,0,0,.1))',
         ),
-        '.stats' => array(
-            'theme_mod' => 'mktpd_home_stats_image',
-            'overlay'   => 'linear-gradient(rgba(13,15,20,.92), rgba(13,15,20,.92))',
+        '.stats'                    => array(
+            'mod'      => 'mktpd_home_stats_image',
+            'gradient' => 'linear-gradient(rgba(13,15,20,.92), rgba(13,15,20,.92))',
+        ),
+        '.case-card-1 .case-image'  => array(
+            'mod'      => 'mktpd_home_case_1_image',
+            'gradient' => 'linear-gradient(135deg, rgba(245,166,35,.34), rgba(13,15,20,.78))',
+        ),
+        '.case-card-2 .case-image'  => array(
+            'mod'      => 'mktpd_home_case_2_image',
+            'gradient' => 'linear-gradient(135deg, rgba(245,166,35,.34), rgba(13,15,20,.78))',
+        ),
+        '.case-card-3 .case-image'  => array(
+            'mod'      => 'mktpd_home_case_3_image',
+            'gradient' => 'linear-gradient(135deg, rgba(245,166,35,.34), rgba(13,15,20,.78))',
         ),
     );
 
     $custom_css = '';
 
-    foreach ($dynamic_images as $selector => $config) {
-        $image_url = get_theme_mod($config['theme_mod']);
+    foreach ($images as $selector => $config) {
+        $image_url = get_theme_mod($config['mod']);
 
         if (empty($image_url)) {
             continue;
         }
 
         $custom_css .= sprintf(
-            "%s { background-image: %s, url('%s'); }\n",
+            "%s{background-image:%s,url('%s');}\n",
             $selector,
-            $config['overlay'],
+            $config['gradient'],
             esc_url($image_url)
         );
     }

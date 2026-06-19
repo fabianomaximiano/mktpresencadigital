@@ -5,23 +5,6 @@
  * Home principal do novo tema.
  */
 
-if (!defined('ABSPATH')) {
-    exit;
-}
-
-$hero_eyebrow     = get_theme_mod('mktpd_home_hero_eyebrow', 'Marketing, SEO e Presença Digital');
-$hero_title       = get_theme_mod('mktpd_home_hero_title', 'Presença digital para pequenos negócios');
-$hero_description = get_theme_mod(
-    'mktpd_home_hero_description',
-    'Estratégias digitais, criação de sites, SEO Local e soluções sob medida para empresas que querem aparecer melhor no Google e conquistar mais clientes.'
-);
-
-$hero_primary_label = get_theme_mod('mktpd_home_hero_primary_label', 'Solicitar orçamento');
-$hero_primary_url   = get_theme_mod('mktpd_home_hero_primary_url', home_url('/orcamento/'));
-
-$hero_secondary_label = get_theme_mod('mktpd_home_hero_secondary_label', 'Conhecer serviços');
-$hero_secondary_url   = get_theme_mod('mktpd_home_hero_secondary_url', home_url('/servicos/'));
-
 get_header();
 ?>
 
@@ -29,30 +12,15 @@ get_header();
     <section class="hero" id="inicio">
         <div class="container">
             <div class="hero-content">
-                <?php if (!empty($hero_eyebrow)) : ?>
-                    <span class="eyebrow"><?php echo esc_html($hero_eyebrow); ?></span>
-                <?php endif; ?>
-
-                <?php if (!empty($hero_title)) : ?>
-                    <h1><?php echo esc_html($hero_title); ?></h1>
-                <?php endif; ?>
-
-                <?php if (!empty($hero_description)) : ?>
-                    <p><?php echo esc_html($hero_description); ?></p>
-                <?php endif; ?>
+                <span class="eyebrow">Marketing, SEO e Presença Digital</span>
+                <h1>Presença digital para pequenos negócios</h1>
+                <p>
+                    Estratégias digitais, criação de sites, SEO Local e soluções sob medida para empresas que querem aparecer melhor no Google e conquistar mais clientes.
+                </p>
 
                 <div class="hero-actions">
-                    <?php if (!empty($hero_primary_label) && !empty($hero_primary_url)) : ?>
-                        <a href="<?php echo esc_url($hero_primary_url); ?>" class="btn-primary">
-                            <?php echo esc_html($hero_primary_label); ?>
-                        </a>
-                    <?php endif; ?>
-
-                    <?php if (!empty($hero_secondary_label) && !empty($hero_secondary_url)) : ?>
-                        <a href="<?php echo esc_url($hero_secondary_url); ?>" class="btn-outline">
-                            <?php echo esc_html($hero_secondary_label); ?>
-                        </a>
-                    <?php endif; ?>
+                    <a href="<?php echo esc_url(home_url('/orcamento/')); ?>" class="btn-primary">Solicitar orçamento</a>
+                    <a href="<?php echo esc_url(home_url('/servicos/')); ?>" class="btn-outline">Conhecer serviços</a>
                 </div>
             </div>
         </div>
@@ -167,38 +135,118 @@ get_header();
                 <div class="small">Cases e projetos</div>
                 <h2>Projetos que fortalecem presença digital</h2>
                 <p>
-                    Exemplos de soluções aplicadas para empresas locais, prestadores de serviços e negócios que precisam melhorar sua comunicação online.
+                    Soluções aplicadas para empresas locais, prestadores de serviços e negócios que precisam melhorar sua presença online, autoridade e geração de oportunidades.
                 </p>
             </div>
 
-            <div class="cases-grid">
-                <article class="case-card case-card-1">
-                    <div class="case-image"></div>
-                    <div class="case-body">
-                        <small>SEO Local</small>
-                        <h3>Projeto para empresa local</h3>
-                        <p>Melhoria da estrutura digital, presença no Google e páginas orientadas para conversão.</p>
-                    </div>
-                </article>
+            <?php
+            $mktpd_projects_query = new WP_Query(array(
+                'post_type'      => 'projetos',
+                'posts_per_page' => 3,
+                'meta_key'       => 'mktpd_project_featured',
+                'meta_value'     => '1',
+                'orderby'        => 'menu_order date',
+                'order'          => 'DESC',
+            ));
 
-                <article class="case-card case-card-2">
-                    <div class="case-image"></div>
-                    <div class="case-body">
-                        <small>Site profissional</small>
-                        <h3>Presença online institucional</h3>
-                        <p>Criação de estrutura visual moderna para transmitir confiança e facilitar contato.</p>
-                    </div>
-                </article>
+            if (!$mktpd_projects_query->have_posts()) {
+                $mktpd_projects_query = new WP_Query(array(
+                    'post_type'      => 'projetos',
+                    'posts_per_page' => 3,
+                    'orderby'        => 'menu_order date',
+                    'order'          => 'DESC',
+                ));
+            }
+            ?>
 
-                <article class="case-card case-card-3">
-                    <div class="case-image"></div>
-                    <div class="case-body">
-                        <small>Performance</small>
-                        <h3>Otimização técnica</h3>
-                        <p>Ajustes em velocidade, organização de conteúdo e preparação para SEO técnico.</p>
-                    </div>
-                </article>
-            </div>
+            <?php if ($mktpd_projects_query->have_posts()) : ?>
+                <div class="cases-grid">
+                    <?php while ($mktpd_projects_query->have_posts()) : ?>
+                        <?php
+                        $mktpd_projects_query->the_post();
+
+                        $project_solution = get_post_meta(get_the_ID(), 'mktpd_project_solution', true);
+                        $project_terms = get_the_terms(get_the_ID(), 'segmento_projeto');
+                        $project_segment = (!empty($project_terms) && !is_wp_error($project_terms)) ? $project_terms[0]->name : 'Presença Digital';
+                        ?>
+
+                        <article class="case-card">
+                            <a href="<?php the_permalink(); ?>" class="case-link" aria-label="<?php echo esc_attr(sprintf('Ver projeto %s', get_the_title())); ?>">
+                                <div class="case-image">
+                                    <?php if (has_post_thumbnail()) : ?>
+                                        <?php the_post_thumbnail('medium_large'); ?>
+                                    <?php else : ?>
+                                        <i class="fa-solid fa-briefcase" aria-hidden="true"></i>
+                                    <?php endif; ?>
+                                </div>
+
+                                <div class="case-body">
+                                    <small><?php echo esc_html($project_segment); ?></small>
+
+                                    <h3><?php the_title(); ?></h3>
+
+                                    <p>
+                                        <?php
+                                        if (!empty($project_solution)) {
+                                            echo esc_html(wp_trim_words($project_solution, 18, '...'));
+                                        } elseif (has_excerpt()) {
+                                            echo esc_html(wp_trim_words(get_the_excerpt(), 18, '...'));
+                                        } else {
+                                            echo esc_html('Solução desenvolvida para fortalecer a presença digital e melhorar a comunicação online.');
+                                        }
+                                        ?>
+                                    </p>
+
+                                    <span class="case-more">Ver projeto →</span>
+                                </div>
+                            </a>
+                        </article>
+                    <?php endwhile; ?>
+                </div>
+
+                <?php wp_reset_postdata(); ?>
+            <?php else : ?>
+                <div class="cases-grid">
+                    <article class="case-card">
+                        <div class="case-image">
+                            <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+                        </div>
+
+                        <div class="case-body">
+                            <small>SEO Local</small>
+                            <h3>Projeto para empresa local</h3>
+                            <p>Melhoria da estrutura digital, presença no Google e páginas orientadas para conversão.</p>
+                            <span class="case-more">Em breve →</span>
+                        </div>
+                    </article>
+
+                    <article class="case-card">
+                        <div class="case-image">
+                            <i class="fa-solid fa-laptop-code" aria-hidden="true"></i>
+                        </div>
+
+                        <div class="case-body">
+                            <small>Presença Digital</small>
+                            <h3>Presença online institucional</h3>
+                            <p>Estrutura visual moderna para transmitir confiança e facilitar contato.</p>
+                            <span class="case-more">Em breve →</span>
+                        </div>
+                    </article>
+
+                    <article class="case-card">
+                        <div class="case-image">
+                            <i class="fa-solid fa-gauge-high" aria-hidden="true"></i>
+                        </div>
+
+                        <div class="case-body">
+                            <small>Performance</small>
+                            <h3>Otimização técnica</h3>
+                            <p>Ajustes em velocidade, organização de conteúdo e preparação para SEO técnico.</p>
+                            <span class="case-more">Em breve →</span>
+                        </div>
+                    </article>
+                </div>
+            <?php endif; ?>
         </div>
     </section>
 

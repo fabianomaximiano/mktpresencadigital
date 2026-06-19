@@ -36,10 +36,10 @@ img {
 }
 
 /* HERO */
-.hero {
-    min-height: 820px;
+/* .hero {
+    min-height: 740px;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     color: #fff;
     position: relative;
     background:
@@ -49,27 +49,52 @@ img {
     background-size: cover;
     background-repeat: no-repeat;
     overflow: hidden;
-    padding-top: 190px;
-}
+} */
 
-.hero > .container {
-    padding-top: 70px;
+.hero {
+    min-height: 860px;
+    display: flex;
+    align-items: flex-start;
+    color: #fff;
+    position: relative;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    overflow: hidden;
+
+    padding-top: 150px; /* antes 250px */
 }
 
 .hero::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 -2px 0;
+    height: 170px;
+    background: linear-gradient(
+        to bottom,
+        rgba(255,255,255,0) 0%,
+        rgba(255,255,255,.72) 48%,
+        #fff 100%
+    );
+    opacity: 1;
+    pointer-events: none;
+}
+
+
+/* .hero::after {
     content: "";
     position: absolute;
     inset: auto 0 0 0;
     height: 110px;
     background: linear-gradient(to bottom, transparent, #fff);
     opacity: .96;
-}
+} */
 
 .hero-content {
     position: relative;
     z-index: 2;
     max-width: 720px;
-    padding-top: 30px;
+    padding-top: 80px;
 }
 
 .eyebrow {
@@ -102,13 +127,6 @@ img {
     flex-wrap: wrap;
     gap: 16px;
     align-items: center;
-    margin-top: 42px;
-    padding-bottom: 70px;
-}
-
-.hero-actions .btn-primary,
-.hero-actions .btn-outline {
-    min-width: 220px;
 }
 
 .btn-primary,
@@ -169,7 +187,7 @@ img {
     letter-spacing: 2px;
     font-weight: 800;
     font-size: 13px;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
 }
 
 .section-title h2 {
@@ -244,8 +262,7 @@ img {
     border: 1px solid #edf0f4;
     border-radius: 12px;
     padding: 14px 16px;
-    font-size: 18px;
-    font-weight: 800;
+    font-weight: 700;
 }
 
 .feature-list li::before {
@@ -316,13 +333,13 @@ img {
     background-size: cover;
     background-repeat: no-repeat;
     color: #fff;
-    padding: 118px 0;
+    padding: 158px 0;
 }
 
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 36px;
+    gap: 24px;
     text-align: center;
 }
 
@@ -344,7 +361,7 @@ img {
 .cases-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 26px;
+    gap: 28px;
 }
 
 .case-card {
@@ -352,20 +369,49 @@ img {
     border-radius: var(--radius);
     overflow: hidden;
     box-shadow: 0 12px 36px rgba(15, 23, 42, .08);
+    border: 1px solid #edf0f4;
+    transition: .22s ease;
+}
+
+.case-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 22px 44px rgba(15, 23, 42, .14);
+}
+
+.case-link {
+    display: block;
+    color: inherit;
+    height: 100%;
+}
+
+.case-link:hover {
+    color: inherit;
 }
 
 .case-image {
     height: 210px;
     background:
-        linear-gradient(135deg, rgba(245,166,35,.34), rgba(13,15,20,.78)),
+        linear-gradient(135deg, rgba(245,166,35,.32), rgba(13,15,20,.88)),
         #151922;
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+    color: rgba(255,255,255,.92);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 54px;
+    overflow: hidden;
+}
+
+.case-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .case-body {
-    padding: 26px;
+    padding: 28px;
 }
 
 .case-body small {
@@ -377,12 +423,18 @@ img {
 
 .case-body h3 {
     font-size: 22px;
-    margin: 8px 0 12px;
+    margin: 10px 0 14px;
     font-weight: 900;
 }
 
 .case-body p {
     color: var(--muted);
+    margin: 0 0 18px;
+}
+
+.case-more {
+    color: #111;
+    font-weight: 900;
 }
 
 /* TESTIMONIALS */
@@ -415,10 +467,19 @@ img {
 }
 
 /* NEWSLETTER */
-.newsletter {
+/* .newsletter {
     background: var(--primary);
     color: #111;
     padding: 54px 0;
+} */
+
+.newsletter {
+    background: var(--primary);
+    color: #111;
+    height: 320px;
+
+    display: flex;
+    align-items: center;
 }
 
 .newsletter-inner {
@@ -486,8 +547,7 @@ img {
 
 @media (max-width: 640px) {
     .hero {
-        min-height: 720px;
-        padding-top: 150px;
+        min-height: 660px;
     }
 
     .hero p {
