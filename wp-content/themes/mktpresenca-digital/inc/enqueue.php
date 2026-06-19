@@ -76,40 +76,40 @@ function mktpd_enqueue_assets() {
 add_action('wp_enqueue_scripts', 'mktpd_enqueue_assets');
 
 function mktpd_enqueue_home_dynamic_styles() {
-    $hero_image  = get_theme_mod('mktpd_home_hero_image');
-    $about_image = get_theme_mod('mktpd_home_about_image');
-    $stats_image = get_theme_mod('mktpd_home_stats_image');
+    if (!is_front_page()) {
+        return;
+    }
+
+    $dynamic_images = array(
+        '.hero' => array(
+            'theme_mod' => 'mktpd_home_hero_image',
+            'overlay'   => 'linear-gradient(90deg, rgba(0,0,0,.78), rgba(0,0,0,.44), rgba(0,0,0,.72))',
+        ),
+        '.about-image' => array(
+            'theme_mod' => 'mktpd_home_about_image',
+            'overlay'   => 'linear-gradient(rgba(0,0,0,.08), rgba(0,0,0,.1))',
+        ),
+        '.stats' => array(
+            'theme_mod' => 'mktpd_home_stats_image',
+            'overlay'   => 'linear-gradient(rgba(13,15,20,.92), rgba(13,15,20,.92))',
+        ),
+    );
 
     $custom_css = '';
 
-    if ($hero_image) {
-        $custom_css .= "
-            .hero {
-                background-image:
-                    linear-gradient(90deg, rgba(0,0,0,.78), rgba(0,0,0,.44), rgba(0,0,0,.72)),
-                    url('" . esc_url($hero_image) . "');
-            }
-        ";
-    }
+    foreach ($dynamic_images as $selector => $config) {
+        $image_url = get_theme_mod($config['theme_mod']);
 
-    if ($about_image) {
-        $custom_css .= "
-            .about-image {
-                background-image:
-                    linear-gradient(rgba(0,0,0,.08), rgba(0,0,0,.1)),
-                    url('" . esc_url($about_image) . "');
-            }
-        ";
-    }
+        if (empty($image_url)) {
+            continue;
+        }
 
-    if ($stats_image) {
-        $custom_css .= "
-            .stats {
-                background-image:
-                    linear-gradient(rgba(13,15,20,.92), rgba(13,15,20,.92)),
-                    url('" . esc_url($stats_image) . "');
-            }
-        ";
+        $custom_css .= sprintf(
+            "%s { background-image: %s, url('%s'); }\n",
+            $selector,
+            $config['overlay'],
+            esc_url($image_url)
+        );
     }
 
     if (!empty($custom_css)) {

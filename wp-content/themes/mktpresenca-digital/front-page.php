@@ -5,6 +5,23 @@
  * Home principal do novo tema.
  */
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+$hero_eyebrow     = get_theme_mod('mktpd_home_hero_eyebrow', 'Marketing, SEO e Presença Digital');
+$hero_title       = get_theme_mod('mktpd_home_hero_title', 'Presença digital para pequenos negócios');
+$hero_description = get_theme_mod(
+    'mktpd_home_hero_description',
+    'Estratégias digitais, criação de sites, SEO Local e soluções sob medida para empresas que querem aparecer melhor no Google e conquistar mais clientes.'
+);
+
+$hero_primary_label = get_theme_mod('mktpd_home_hero_primary_label', 'Solicitar orçamento');
+$hero_primary_url   = get_theme_mod('mktpd_home_hero_primary_url', home_url('/orcamento/'));
+
+$hero_secondary_label = get_theme_mod('mktpd_home_hero_secondary_label', 'Conhecer serviços');
+$hero_secondary_url   = get_theme_mod('mktpd_home_hero_secondary_url', home_url('/servicos/'));
+
 get_header();
 ?>
 
@@ -12,15 +29,30 @@ get_header();
     <section class="hero" id="inicio">
         <div class="container">
             <div class="hero-content">
-                <span class="eyebrow">Marketing, SEO e Presença Digital</span>
-                <h1>Presença digital para pequenos negócios</h1>
-                <p>
-                    Estratégias digitais, criação de sites, SEO Local e soluções sob medida para empresas que querem aparecer melhor no Google e conquistar mais clientes.
-                </p>
+                <?php if (!empty($hero_eyebrow)) : ?>
+                    <span class="eyebrow"><?php echo esc_html($hero_eyebrow); ?></span>
+                <?php endif; ?>
+
+                <?php if (!empty($hero_title)) : ?>
+                    <h1><?php echo esc_html($hero_title); ?></h1>
+                <?php endif; ?>
+
+                <?php if (!empty($hero_description)) : ?>
+                    <p><?php echo esc_html($hero_description); ?></p>
+                <?php endif; ?>
 
                 <div class="hero-actions">
-                    <a href="<?php echo esc_url(home_url('/orcamento/')); ?>" class="btn-primary">Solicitar orçamento</a>
-                    <a href="<?php echo esc_url(home_url('/servicos/')); ?>" class="btn-outline">Conhecer serviços</a>
+                    <?php if (!empty($hero_primary_label) && !empty($hero_primary_url)) : ?>
+                        <a href="<?php echo esc_url($hero_primary_url); ?>" class="btn-primary">
+                            <?php echo esc_html($hero_primary_label); ?>
+                        </a>
+                    <?php endif; ?>
+
+                    <?php if (!empty($hero_secondary_label) && !empty($hero_secondary_url)) : ?>
+                        <a href="<?php echo esc_url($hero_secondary_url); ?>" class="btn-outline">
+                            <?php echo esc_html($hero_secondary_label); ?>
+                        </a>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

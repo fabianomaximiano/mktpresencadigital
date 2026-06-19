@@ -42,7 +42,7 @@ if (!defined('ABSPATH')) {
                 'container'      => false,
                 'menu_class'     => 'menu-list',
                 'fallback_cb'    => 'mktpd_primary_menu_fallback',
-                'depth'          => 2,
+                'depth'          => 1,
             ));
             ?>
 
