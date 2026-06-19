@@ -92,7 +92,7 @@ function mktpd_add_url_control($wp_customize, $setting_id, $label, $default, $se
     ));
 }
 
-function mktpd_add_image_control($wp_customize, $setting_id, $label, $section) {
+function mktpd_add_image_control($wp_customize, $setting_id, $label, $section, $description = '') {
     $wp_customize->add_setting($setting_id, array(
         'default'           => '',
         'sanitize_callback' => 'esc_url_raw',
@@ -103,8 +103,9 @@ function mktpd_add_image_control($wp_customize, $setting_id, $label, $section) {
         $wp_customize,
         $setting_id,
         array(
-            'label'   => $label,
-            'section' => $section,
+            'label'       => $label,
+            'description' => $description,
+            'section'     => $section,
         )
     ));
 }
