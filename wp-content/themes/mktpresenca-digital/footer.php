@@ -12,11 +12,20 @@ if (!defined('ABSPATH')) {
     <div class="container">
         <div class="footer-grid">
             <div class="footer-brand">
-                <h3>MKT Presença <span>Digital</span></h3>
+
+                <?php
+                if (has_custom_logo()) :
+                    the_custom_logo();
+                else :
+                ?>
+                    <h3><?php bloginfo('name'); ?></h3>
+                <?php endif; ?>
+
                 <p>
                     Soluções digitais para empresas que desejam melhorar sua presença online,
                     aparecer melhor no Google e gerar mais oportunidades.
                 </p>
+
             </div>
 
             <div class="footer-col">
