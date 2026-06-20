@@ -24,16 +24,17 @@
     gap: 36px;
 }
 
-.logo {
+.logo,
+.logo:hover,
+.logo:visited,
+.logo:focus,
+.logo:active {
     color: #fff;
     font-size: 24px;
     font-weight: 800;
     letter-spacing: .3px;
     line-height: 1.1;
-}
-
-.logo:hover {
-    color: #fff;
+    text-decoration: none !important;
 }
 
 .logo-main {
@@ -81,19 +82,30 @@
     gap: 30px;
 }
 
-.main-nav a {
-    color: #fff;
+.site-header .main-nav a,
+.site-header .main-nav a:visited,
+.site-header .main-nav a:focus,
+.site-header .main-nav a:active {
+    color: #fff !important;
     opacity: .92;
+    text-decoration: none !important;
     transition: .2s;
 }
 
-.main-nav a:hover,
-.main-nav .current-menu-item > a {
-    color: var(--primary);
+.site-header .main-nav a:hover,
+.site-header .main-nav a[aria-current="page"],
+.site-header .main-nav .current-menu-item > a,
+.site-header .main-nav .current_page_item > a,
+.site-header .main-nav .current_page_ancestor > a {
+    color: var(--primary) !important;
     opacity: 1;
+    text-decoration: none !important;
 }
 
-.btn-header {
+.btn-header,
+.btn-header:visited,
+.btn-header:focus,
+.btn-header:active {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -103,11 +115,13 @@
     border-radius: 999px;
     font-weight: 800;
     font-size: 14px;
+    text-decoration: none !important;
     box-shadow: 0 8px 25px rgba(245, 166, 35, .28);
 }
 
 .btn-header:hover {
     color: #111 !important;
+    text-decoration: none !important;
     transform: translateY(-1px);
 }
 
