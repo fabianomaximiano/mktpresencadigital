@@ -200,7 +200,10 @@ function mktpd_register_qsomos_post_type() {
         'has_archive'         => false,
         'publicly_queryable'  => true,
         'exclude_from_search' => true,
-        'rewrite'             => array('slug' => 'quem-somos-conteudo'),
+        // 'rewrite'             => array(
+        //                                 'slug' => 'quem-somos',
+        //                                 'with_front' => false,
+        'rewrite'             => false,
         'supports'            => array('thumbnail', 'page-attributes', 'revisions'),
     );
 

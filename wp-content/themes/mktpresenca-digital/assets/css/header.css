@@ -1,3 +1,6 @@
+:root {
+    --primary: #f5a623;
+}
 /* HEADER */
 .site-header {
     width: 100%;

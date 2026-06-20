@@ -20,14 +20,14 @@ if (!defined('ABSPATH')) {
 
 <header class="site-header" id="siteHeader">
     <div class="container header-inner">
-        <a href="<?php echo esc_url(home_url('/')); ?>" class="logo" aria-label="<?php echo esc_attr(get_bloginfo('name')); ?>">
-            <?php if (has_custom_logo()) : ?>
-                <?php the_custom_logo(); ?>
-            <?php else : ?>
+        <?php if (has_custom_logo()) : ?>
+            <?php the_custom_logo(); ?>
+        <?php else : ?>
+            <a href="<?php echo esc_url(home_url('/')); ?>" class="logo" aria-label="<?php echo esc_attr(get_bloginfo('name')); ?>">
                 <span class="logo-main">MKT Presença</span>
                 <span class="logo-sub">Digital</span>
-            <?php endif; ?>
-        </a>
+            </a>
+        <?php endif; ?>
 
         <button class="menu-toggle" id="menuToggle" type="button" aria-label="Abrir menu" aria-controls="mainNav" aria-expanded="false">
             <span></span>
