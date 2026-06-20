@@ -36,20 +36,6 @@ img {
 }
 
 /* HERO */
-/* .hero {
-    min-height: 740px;
-    display: flex;
-    align-items: center;
-    color: #fff;
-    position: relative;
-    background:
-        linear-gradient(90deg, rgba(0,0,0,.78), rgba(0,0,0,.44), rgba(0,0,0,.72)),
-        #111927;
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    overflow: hidden;
-} */
 
 .hero {
     min-height: 860px;
