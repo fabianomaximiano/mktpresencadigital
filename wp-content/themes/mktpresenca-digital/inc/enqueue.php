@@ -42,6 +42,15 @@ function mktpd_enqueue_assets() {
         mktpd_enqueue_home_dynamic_styles();
     }
 
+    if (is_page_template('quem-somos.php')) {
+        wp_enqueue_style(
+            'mktpd-quem-somos',
+            $theme_uri . '/assets/css/quem-somos.css',
+            array('mktpd-header'),
+            '1.0.0'
+        );
+    }
+
     wp_enqueue_style(
         'mktpd-footer',
         $theme_uri . '/assets/css/footer.css',
