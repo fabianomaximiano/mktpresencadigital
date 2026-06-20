@@ -155,13 +155,6 @@ $cta_label   = mktpd_qsomos_meta($qsomos_id, 'mktpd_qsomos_cta_button_label', 'S
 $cta_url     = mktpd_qsomos_meta($qsomos_id, 'mktpd_qsomos_cta_button_url', home_url('/orcamento/'));
 
 get_header();
-
-wp_enqueue_style(
-    'mktpd-quem-somos',
-    get_stylesheet_directory_uri() . '/assets/css/quem-somos.css',
-    array(),
-    wp_get_theme()->get('Version')
-);
 ?>
 
 <main class="qs-page" id="conteudo-principal">

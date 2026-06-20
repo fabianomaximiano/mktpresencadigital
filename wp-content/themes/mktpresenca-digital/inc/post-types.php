@@ -173,7 +173,7 @@ function mktpd_register_qsomos_post_type() {
         'singular_name'         => 'Quem Somos',
         'menu_name'             => 'Quem Somos',
         'name_admin_bar'        => 'Quem Somos',
-        'add_new'               => 'Adicionar novo',
+        'add_new'               => 'Adicionar conteúdo',
         'add_new_item'          => 'Adicionar conteúdo Quem Somos',
         'new_item'              => 'Novo conteúdo Quem Somos',
         'edit_item'             => 'Editar Quem Somos',
@@ -189,28 +189,129 @@ function mktpd_register_qsomos_post_type() {
     );
 
     $args = array(
-        'labels'             => $labels,
-        'description'        => 'Conteúdo administrável da página Quem Somos.',
-        'public'             => true,
-        'show_ui'            => true,
-        'show_in_menu'       => true,
-        'menu_position'      => 20,
-        'menu_icon'          => 'dashicons-id-alt',
-        'show_in_rest'       => true,
-        'has_archive'        => false,
-        'rewrite'            => array('slug' => 'quem-somos-conteudo'),
-        'supports'           => array('title', 'editor', 'excerpt', 'thumbnail', 'page-attributes'),
+        'labels'              => $labels,
+        'description'         => 'Conteúdo dinâmico da página Quem Somos.',
+        'public'              => true,
+        'show_ui'             => true,
+        'show_in_menu'        => true,
+        'menu_position'       => 22,
+        'menu_icon'           => 'dashicons-id-alt',
+        'show_in_rest'        => false,
+        'has_archive'         => false,
+        'publicly_queryable'  => true,
+        'exclude_from_search' => true,
+        'rewrite'             => array('slug' => 'quem-somos-conteudo'),
+        'supports'            => array('thumbnail', 'page-attributes', 'revisions'),
     );
 
     register_post_type('qsomos', $args);
 }
 add_action('init', 'mktpd_register_qsomos_post_type');
 
+/**
+ * Campos administráveis do Quem Somos.
+ */
+function mktpd_qsomos_field_groups() {
+    return array(
+        'hero' => array(
+            'title'       => 'Hero',
+            'description' => 'Conteúdo exibido no topo da página.',
+            'fields'      => array(
+                'mktpd_qsomos_hero_eyebrow'     => array('label' => 'Hero - chamada superior', 'type' => 'text'),
+                'mktpd_qsomos_hero_title'       => array('label' => 'Hero - título', 'type' => 'text'),
+                'mktpd_qsomos_hero_description' => array('label' => 'Hero - descrição', 'type' => 'textarea', 'rows' => 4),
+            ),
+        ),
+        'about' => array(
+            'title'       => 'Seção Sobre',
+            'description' => 'Imagem principal pela coluna lateral: use a imagem destacada do post.',
+            'fields'      => array(
+                'mktpd_qsomos_about_eyebrow' => array('label' => 'Sobre - chamada superior', 'type' => 'text'),
+                'mktpd_qsomos_about_title'   => array('label' => 'Sobre - título', 'type' => 'text'),
+                'mktpd_qsomos_about_text_1'  => array('label' => 'Sobre - texto 1', 'type' => 'textarea', 'rows' => 4),
+                'mktpd_qsomos_about_text_2'  => array('label' => 'Sobre - texto 2', 'type' => 'textarea', 'rows' => 4),
+            ),
+        ),
+        'features' => array(
+            'title'       => 'Destaques',
+            'description' => 'Os destaques aparecem em formato de botões/cards abaixo do texto da seção Sobre.',
+            'fields'      => array(
+                'mktpd_qsomos_feature_1_label' => array('label' => 'Destaque 1 - texto', 'type' => 'text'),
+                'mktpd_qsomos_feature_1_url'   => array('label' => 'Destaque 1 - URL', 'type' => 'url'),
+                'mktpd_qsomos_feature_2_label' => array('label' => 'Destaque 2 - texto', 'type' => 'text'),
+                'mktpd_qsomos_feature_2_url'   => array('label' => 'Destaque 2 - URL', 'type' => 'url'),
+                'mktpd_qsomos_feature_3_label' => array('label' => 'Destaque 3 - texto', 'type' => 'text'),
+                'mktpd_qsomos_feature_3_url'   => array('label' => 'Destaque 3 - URL', 'type' => 'url'),
+                'mktpd_qsomos_feature_4_label' => array('label' => 'Destaque 4 - texto', 'type' => 'text'),
+                'mktpd_qsomos_feature_4_url'   => array('label' => 'Destaque 4 - URL', 'type' => 'url'),
+            ),
+        ),
+        'method' => array(
+            'title'       => 'Metodologia',
+            'description' => 'Processo de trabalho apresentado em quatro etapas.',
+            'fields'      => array(
+                'mktpd_qsomos_method_eyebrow'     => array('label' => 'Metodologia - chamada superior', 'type' => 'text'),
+                'mktpd_qsomos_method_title'       => array('label' => 'Metodologia - título', 'type' => 'text'),
+                'mktpd_qsomos_method_description' => array('label' => 'Metodologia - descrição', 'type' => 'textarea', 'rows' => 4),
+                'mktpd_qsomos_method_1_title'     => array('label' => 'Método 1 - título', 'type' => 'text'),
+                'mktpd_qsomos_method_1_text'      => array('label' => 'Método 1 - texto', 'type' => 'textarea', 'rows' => 3),
+                'mktpd_qsomos_method_2_title'     => array('label' => 'Método 2 - título', 'type' => 'text'),
+                'mktpd_qsomos_method_2_text'      => array('label' => 'Método 2 - texto', 'type' => 'textarea', 'rows' => 3),
+                'mktpd_qsomos_method_3_title'     => array('label' => 'Método 3 - título', 'type' => 'text'),
+                'mktpd_qsomos_method_3_text'      => array('label' => 'Método 3 - texto', 'type' => 'textarea', 'rows' => 3),
+                'mktpd_qsomos_method_4_title'     => array('label' => 'Método 4 - título', 'type' => 'text'),
+                'mktpd_qsomos_method_4_text'      => array('label' => 'Método 4 - texto', 'type' => 'textarea', 'rows' => 3),
+            ),
+        ),
+        'stats' => array(
+            'title'       => 'Indicadores',
+            'description' => 'Números exibidos na faixa escura da página.',
+            'fields'      => array(
+                'mktpd_qsomos_stat_1_value' => array('label' => 'Indicador 1 - valor', 'type' => 'text'),
+                'mktpd_qsomos_stat_1_label' => array('label' => 'Indicador 1 - legenda', 'type' => 'text'),
+                'mktpd_qsomos_stat_2_value' => array('label' => 'Indicador 2 - valor', 'type' => 'text'),
+                'mktpd_qsomos_stat_2_label' => array('label' => 'Indicador 2 - legenda', 'type' => 'text'),
+                'mktpd_qsomos_stat_3_value' => array('label' => 'Indicador 3 - valor', 'type' => 'text'),
+                'mktpd_qsomos_stat_3_label' => array('label' => 'Indicador 3 - legenda', 'type' => 'text'),
+                'mktpd_qsomos_stat_4_value' => array('label' => 'Indicador 4 - valor', 'type' => 'text'),
+                'mktpd_qsomos_stat_4_label' => array('label' => 'Indicador 4 - legenda', 'type' => 'text'),
+            ),
+        ),
+        'values' => array(
+            'title'       => 'Posicionamento e Valores',
+            'description' => 'Bloco de posicionamento institucional e três valores principais.',
+            'fields'      => array(
+                'mktpd_qsomos_values_eyebrow' => array('label' => 'Posicionamento - chamada superior', 'type' => 'text'),
+                'mktpd_qsomos_values_title'   => array('label' => 'Posicionamento - título', 'type' => 'text'),
+                'mktpd_qsomos_values_text'    => array('label' => 'Posicionamento - texto', 'type' => 'textarea', 'rows' => 4),
+                'mktpd_qsomos_value_1_title'  => array('label' => 'Valor 1 - título', 'type' => 'text'),
+                'mktpd_qsomos_value_1_text'   => array('label' => 'Valor 1 - texto', 'type' => 'textarea', 'rows' => 3),
+                'mktpd_qsomos_value_2_title'  => array('label' => 'Valor 2 - título', 'type' => 'text'),
+                'mktpd_qsomos_value_2_text'   => array('label' => 'Valor 2 - texto', 'type' => 'textarea', 'rows' => 3),
+                'mktpd_qsomos_value_3_title'  => array('label' => 'Valor 3 - título', 'type' => 'text'),
+                'mktpd_qsomos_value_3_text'   => array('label' => 'Valor 3 - texto', 'type' => 'textarea', 'rows' => 3),
+            ),
+        ),
+        'cta' => array(
+            'title'       => 'CTA Final',
+            'description' => 'Chamada comercial exibida antes do rodapé.',
+            'fields'      => array(
+                'mktpd_qsomos_cta_enabled'      => array('label' => 'Exibir CTA final', 'type' => 'checkbox'),
+                'mktpd_qsomos_cta_eyebrow'      => array('label' => 'CTA - chamada superior', 'type' => 'text'),
+                'mktpd_qsomos_cta_title'        => array('label' => 'CTA - título', 'type' => 'text'),
+                'mktpd_qsomos_cta_text'         => array('label' => 'CTA - texto', 'type' => 'textarea', 'rows' => 4),
+                'mktpd_qsomos_cta_button_label' => array('label' => 'CTA - texto do botão', 'type' => 'text'),
+                'mktpd_qsomos_cta_button_url'   => array('label' => 'CTA - URL do botão', 'type' => 'url'),
+            ),
+        ),
+    );
+}
+
 function mktpd_add_qsomos_metaboxes() {
     add_meta_box(
-        'mktpd_qsomos_details',
+        'mktpd_qsomos_content',
         'Conteúdo da página Quem Somos',
-        'mktpd_render_qsomos_details_metabox',
+        'mktpd_render_qsomos_content_metabox',
         'qsomos',
         'normal',
         'high'
@@ -218,91 +319,47 @@ function mktpd_add_qsomos_metaboxes() {
 }
 add_action('add_meta_boxes', 'mktpd_add_qsomos_metaboxes');
 
-function mktpd_qsomos_text_fields() {
-    return array(
-        'mktpd_qsomos_hero_eyebrow'       => 'Hero - chamada superior',
-        'mktpd_qsomos_hero_title'         => 'Hero - título',
-        'mktpd_qsomos_about_eyebrow'      => 'Sobre - chamada superior',
-        'mktpd_qsomos_about_title'        => 'Sobre - título',
-        'mktpd_qsomos_feature_1_label'    => 'Destaque 1 - texto',
-        'mktpd_qsomos_feature_1_url'      => 'Destaque 1 - URL',
-        'mktpd_qsomos_feature_2_label'    => 'Destaque 2 - texto',
-        'mktpd_qsomos_feature_2_url'      => 'Destaque 2 - URL',
-        'mktpd_qsomos_feature_3_label'    => 'Destaque 3 - texto',
-        'mktpd_qsomos_feature_3_url'      => 'Destaque 3 - URL',
-        'mktpd_qsomos_feature_4_label'    => 'Destaque 4 - texto',
-        'mktpd_qsomos_feature_4_url'      => 'Destaque 4 - URL',
-        'mktpd_qsomos_method_eyebrow'     => 'Metodologia - chamada superior',
-        'mktpd_qsomos_method_title'       => 'Metodologia - título',
-        'mktpd_qsomos_method_1_title'     => 'Método 1 - título',
-        'mktpd_qsomos_method_2_title'     => 'Método 2 - título',
-        'mktpd_qsomos_method_3_title'     => 'Método 3 - título',
-        'mktpd_qsomos_method_4_title'     => 'Método 4 - título',
-        'mktpd_qsomos_stat_1_value'       => 'Indicador 1 - valor',
-        'mktpd_qsomos_stat_1_label'       => 'Indicador 1 - legenda',
-        'mktpd_qsomos_stat_2_value'       => 'Indicador 2 - valor',
-        'mktpd_qsomos_stat_2_label'       => 'Indicador 2 - legenda',
-        'mktpd_qsomos_stat_3_value'       => 'Indicador 3 - valor',
-        'mktpd_qsomos_stat_3_label'       => 'Indicador 3 - legenda',
-        'mktpd_qsomos_stat_4_value'       => 'Indicador 4 - valor',
-        'mktpd_qsomos_stat_4_label'       => 'Indicador 4 - legenda',
-        'mktpd_qsomos_values_eyebrow'     => 'Posicionamento - chamada superior',
-        'mktpd_qsomos_values_title'       => 'Posicionamento - título',
-        'mktpd_qsomos_value_1_title'      => 'Valor 1 - título',
-        'mktpd_qsomos_value_2_title'      => 'Valor 2 - título',
-        'mktpd_qsomos_value_3_title'      => 'Valor 3 - título',
-        'mktpd_qsomos_cta_eyebrow'        => 'CTA - chamada superior',
-        'mktpd_qsomos_cta_title'          => 'CTA - título',
-        'mktpd_qsomos_cta_button_label'   => 'CTA - texto do botão',
-        'mktpd_qsomos_cta_button_url'     => 'CTA - URL do botão',
-    );
-}
+function mktpd_render_qsomos_content_metabox($post) {
+    wp_nonce_field('mktpd_save_qsomos_content', 'mktpd_qsomos_content_nonce');
 
-function mktpd_qsomos_textarea_fields() {
-    return array(
-        'mktpd_qsomos_hero_description'   => 'Hero - descrição',
-        'mktpd_qsomos_about_text_1'       => 'Sobre - texto 1',
-        'mktpd_qsomos_about_text_2'       => 'Sobre - texto 2',
-        'mktpd_qsomos_method_description' => 'Metodologia - descrição',
-        'mktpd_qsomos_method_1_text'      => 'Método 1 - texto',
-        'mktpd_qsomos_method_2_text'      => 'Método 2 - texto',
-        'mktpd_qsomos_method_3_text'      => 'Método 3 - texto',
-        'mktpd_qsomos_method_4_text'      => 'Método 4 - texto',
-        'mktpd_qsomos_values_text'        => 'Posicionamento - texto',
-        'mktpd_qsomos_value_1_text'       => 'Valor 1 - texto',
-        'mktpd_qsomos_value_2_text'       => 'Valor 2 - texto',
-        'mktpd_qsomos_value_3_text'       => 'Valor 3 - texto',
-        'mktpd_qsomos_cta_text'           => 'CTA - texto',
-    );
-}
+    echo '<p>Preencha os blocos abaixo na mesma ordem em que eles aparecem na página. A imagem principal deve ser definida na caixa <strong>Imagem da seção Quem Somos</strong>, na lateral direita.</p>';
 
-function mktpd_render_qsomos_details_metabox($post) {
-    wp_nonce_field('mktpd_save_qsomos_details', 'mktpd_qsomos_details_nonce');
+    foreach (mktpd_qsomos_field_groups() as $group) {
+        echo '<hr>';
+        echo '<h2>' . esc_html($group['title']) . '</h2>';
 
-    echo '<p><strong>Imagem principal:</strong> use a imagem destacada deste conteúdo.</p>';
-    echo '<p><label><input type="checkbox" name="mktpd_qsomos_cta_enabled" value="1" ' . checked(get_post_meta($post->ID, 'mktpd_qsomos_cta_enabled', true), '1', false) . '> Exibir CTA final</label></p>';
+        if (!empty($group['description'])) {
+            echo '<p class="description">' . esc_html($group['description']) . '</p>';
+        }
 
-    foreach (mktpd_qsomos_text_fields() as $field_id => $label) {
-        $value = get_post_meta($post->ID, $field_id, true);
+        foreach ($group['fields'] as $field_id => $field) {
+            $value = get_post_meta($post->ID, $field_id, true);
 
-        echo '<p>';
-        echo '<label for="' . esc_attr($field_id) . '"><strong>' . esc_html($label) . '</strong></label><br>';
-        echo '<input type="text" id="' . esc_attr($field_id) . '" name="' . esc_attr($field_id) . '" value="' . esc_attr($value) . '" style="width:100%;">';
-        echo '</p>';
-    }
+            echo '<p>';
+            echo '<label for="' . esc_attr($field_id) . '"><strong>' . esc_html($field['label']) . '</strong></label><br>';
 
-    foreach (mktpd_qsomos_textarea_fields() as $field_id => $label) {
-        $value = get_post_meta($post->ID, $field_id, true);
+            if ($field['type'] === 'textarea') {
+                $rows = !empty($field['rows']) ? absint($field['rows']) : 4;
 
-        echo '<p>';
-        echo '<label for="' . esc_attr($field_id) . '"><strong>' . esc_html($label) . '</strong></label><br>';
-        echo '<textarea id="' . esc_attr($field_id) . '" name="' . esc_attr($field_id) . '" rows="4" style="width:100%;">' . esc_textarea($value) . '</textarea>';
-        echo '</p>';
+                echo '<textarea class="large-text" id="' . esc_attr($field_id) . '" name="' . esc_attr($field_id) . '" rows="' . esc_attr($rows) . '">' . esc_textarea($value) . '</textarea>';
+            } elseif ($field['type'] === 'checkbox') {
+                echo '<label>';
+                echo '<input type="checkbox" id="' . esc_attr($field_id) . '" name="' . esc_attr($field_id) . '" value="1" ' . checked($value, '1', false) . '> ';
+                echo 'Ativo';
+                echo '</label>';
+            } else {
+                $input_type = $field['type'] === 'url' ? 'url' : 'text';
+
+                echo '<input class="large-text" type="' . esc_attr($input_type) . '" id="' . esc_attr($field_id) . '" name="' . esc_attr($field_id) . '" value="' . esc_attr($value) . '">';
+            }
+
+            echo '</p>';
+        }
     }
 }
 
-function mktpd_save_qsomos_details($post_id) {
-    if (!isset($_POST['mktpd_qsomos_details_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['mktpd_qsomos_details_nonce'])), 'mktpd_save_qsomos_details')) {
+function mktpd_save_qsomos_content($post_id) {
+    if (!isset($_POST['mktpd_qsomos_content_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['mktpd_qsomos_content_nonce'])), 'mktpd_save_qsomos_content')) {
         return;
     }
 
@@ -314,20 +371,60 @@ function mktpd_save_qsomos_details($post_id) {
         return;
     }
 
-    foreach (mktpd_qsomos_text_fields() as $field_id => $label) {
+    $post = get_post($post_id);
+
+    if ($post && $post->post_type === 'qsomos' && trim($post->post_title) === '') {
+        remove_action('save_post_qsomos', 'mktpd_save_qsomos_content');
+
+        wp_update_post(array(
+            'ID'         => $post_id,
+            'post_title' => 'Conteúdo Quem Somos',
+            'post_name'  => 'conteudo-quem-somos',
+        ));
+
+        add_action('save_post_qsomos', 'mktpd_save_qsomos_content');
+    }
+
+    $checkbox_fields = array();
+    $url_fields      = array();
+    $textarea_fields = array();
+    $text_fields     = array();
+
+    foreach (mktpd_qsomos_field_groups() as $group) {
+        foreach ($group['fields'] as $field_id => $field) {
+            if ($field['type'] === 'checkbox') {
+                $checkbox_fields[] = $field_id;
+            } elseif ($field['type'] === 'url') {
+                $url_fields[] = $field_id;
+            } elseif ($field['type'] === 'textarea') {
+                $textarea_fields[] = $field_id;
+            } else {
+                $text_fields[] = $field_id;
+            }
+        }
+    }
+
+    foreach ($text_fields as $field_id) {
         if (isset($_POST[$field_id])) {
             update_post_meta($post_id, $field_id, sanitize_text_field(wp_unslash($_POST[$field_id])));
         }
     }
 
-    foreach (mktpd_qsomos_textarea_fields() as $field_id => $label) {
+    foreach ($textarea_fields as $field_id) {
         if (isset($_POST[$field_id])) {
             update_post_meta($post_id, $field_id, sanitize_textarea_field(wp_unslash($_POST[$field_id])));
         }
     }
 
-    $cta_enabled = isset($_POST['mktpd_qsomos_cta_enabled']) ? '1' : '0';
-    update_post_meta($post_id, 'mktpd_qsomos_cta_enabled', $cta_enabled);
-}
-add_action('save_post_qsomos', 'mktpd_save_qsomos_details');
+    foreach ($url_fields as $field_id) {
+        if (isset($_POST[$field_id])) {
+            update_post_meta($post_id, $field_id, esc_url_raw(wp_unslash($_POST[$field_id])));
+        }
+    }
 
+    foreach ($checkbox_fields as $field_id) {
+        $value = isset($_POST[$field_id]) ? '1' : '0';
+        update_post_meta($post_id, $field_id, $value);
+    }
+}
+add_action('save_post_qsomos', 'mktpd_save_qsomos_content');
