@@ -80,8 +80,10 @@ Refatoração completa do site e criação de tema próprio WordPress.
 
 ## Quem Somos
 
-* [ ] Revisar layout
-* [x] Tornar administrável
+- [ ] Revisar layout
+- [x] Criar template visual em laboratório
+- [ ] Tornar administrável
+- [ ] Transformar template em página real
 
 ## Serviços
 
@@ -108,7 +110,7 @@ Refatoração completa do site e criação de tema próprio WordPress.
 
 * [ ] Inserir dados reais
 * [ ] Revisar links
-* [ ] Tornar administrável
+* [x] Tornar administrável
 
 ## Validação Final da Home
 
@@ -120,12 +122,12 @@ Refatoração completa do site e criação de tema próprio WordPress.
 
 # FASE 03 - Páginas Internas
 
-* [ ] page.php
-* [ ] Template interno padrão
-* [ ] Página Sobre
-* [ ] Página Serviços
-* [ ] Página Contato
-* [ ] Página Orçamento
+- [ ] page.php
+- [ ] Template interno padrão
+- [ ] Página Sobre
+- [ ] Página Serviços
+- [ ] Página Contato
+- [ ] Página Orçamento
 
 ---
 
@@ -156,7 +158,7 @@ Refatoração completa do site e criação de tema próprio WordPress.
 
 * [x] Hero
 * [x] Header
-* [ ] Footer
+* [x] Footer
 
 ## CPT
 
