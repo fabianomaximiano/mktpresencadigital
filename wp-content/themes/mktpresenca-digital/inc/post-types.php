@@ -219,6 +219,7 @@ function mktpd_qsomos_field_groups() {
             'fields'      => array(
                 'mktpd_qsomos_hero_eyebrow'     => array('label' => 'Hero - chamada superior', 'type' => 'text'),
                 'mktpd_qsomos_hero_title'       => array('label' => 'Hero - título', 'type' => 'text'),
+                'mktpd_qsomos_hero_image_id'    => array('label' => 'Hero - imagem de fundo', 'type' => 'image', 'description' => 'Recomendado: 1920x1080 px (16:9) • WebP • até 250 KB.'),
                 'mktpd_qsomos_hero_description' => array('label' => 'Hero - descrição', 'type' => 'textarea', 'rows' => 4),
             ),
         ),
@@ -292,6 +293,20 @@ function mktpd_qsomos_field_groups() {
                 'mktpd_qsomos_value_3_text'   => array('label' => 'Valor 3 - texto', 'type' => 'textarea', 'rows' => 3),
             ),
         ),
+        'why' => array(
+            'title'       => 'Por que a MKT Presença Digital?',
+            'description' => 'Bloco com três motivos para reforçar confiança e conversão.',
+            'fields'      => array(
+                'mktpd_qsomos_why_eyebrow' => array('label' => 'Por que - chamada superior', 'type' => 'text'),
+                'mktpd_qsomos_why_title'   => array('label' => 'Por que - título', 'type' => 'text'),
+                'mktpd_qsomos_why_1_title' => array('label' => 'Motivo 1 - título', 'type' => 'text'),
+                'mktpd_qsomos_why_1_text'  => array('label' => 'Motivo 1 - texto', 'type' => 'textarea', 'rows' => 3),
+                'mktpd_qsomos_why_2_title' => array('label' => 'Motivo 2 - título', 'type' => 'text'),
+                'mktpd_qsomos_why_2_text'  => array('label' => 'Motivo 2 - texto', 'type' => 'textarea', 'rows' => 3),
+                'mktpd_qsomos_why_3_title' => array('label' => 'Motivo 3 - título', 'type' => 'text'),
+                'mktpd_qsomos_why_3_text'  => array('label' => 'Motivo 3 - texto', 'type' => 'textarea', 'rows' => 3),
+            ),
+        ),
         'cta' => array(
             'title'       => 'CTA Final',
             'description' => 'Chamada comercial exibida antes do rodapé.',
@@ -306,6 +321,22 @@ function mktpd_qsomos_field_groups() {
         ),
     );
 }
+
+
+function mktpd_qsomos_admin_enqueue_media($hook) {
+    if (!in_array($hook, array('post.php', 'post-new.php'), true)) {
+        return;
+    }
+
+    $screen = get_current_screen();
+
+    if (!$screen || $screen->post_type !== 'qsomos') {
+        return;
+    }
+
+    wp_enqueue_media();
+}
+add_action('admin_enqueue_scripts', 'mktpd_qsomos_admin_enqueue_media');
 
 function mktpd_add_qsomos_metaboxes() {
     add_meta_box(
@@ -347,6 +378,21 @@ function mktpd_render_qsomos_content_metabox($post) {
                 echo '<input type="checkbox" id="' . esc_attr($field_id) . '" name="' . esc_attr($field_id) . '" value="1" ' . checked($value, '1', false) . '> ';
                 echo 'Ativo';
                 echo '</label>';
+            } elseif ($field['type'] === 'image') {
+                $image_id  = absint($value);
+                $image_url = $image_id ? wp_get_attachment_image_url($image_id, 'medium') : '';
+                $preview_style = $image_url ? '' : 'display:none;';
+
+                if (!empty($field['description'])) {
+                    echo '<span class="description">' . esc_html($field['description']) . '</span><br>';
+                }
+
+                echo '<input type="hidden" id="' . esc_attr($field_id) . '" name="' . esc_attr($field_id) . '" value="' . esc_attr($image_id) . '">';
+                echo '<div class="mktpd-media-preview" data-preview-for="' . esc_attr($field_id) . '" style="margin:10px 0;' . esc_attr($preview_style) . '">';
+                echo '<img src="' . esc_url($image_url) . '" alt="" style="max-width:280px;height:auto;border-radius:6px;border:1px solid #ccd0d4;">';
+                echo '</div>';
+                echo '<button type="button" class="button mktpd-media-select" data-target="' . esc_attr($field_id) . '">Selecionar imagem</button> ';
+                echo '<button type="button" class="button mktpd-media-remove" data-target="' . esc_attr($field_id) . '">Remover imagem</button>';
             } else {
                 $input_type = $field['type'] === 'url' ? 'url' : 'text';
 
@@ -357,6 +403,75 @@ function mktpd_render_qsomos_content_metabox($post) {
         }
     }
 }
+
+
+function mktpd_qsomos_media_selector_script() {
+    $screen = get_current_screen();
+
+    if (!$screen || $screen->post_type !== 'qsomos') {
+        return;
+    }
+    ?>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            let frame;
+
+            document.querySelectorAll('.mktpd-media-select').forEach(function (button) {
+                button.addEventListener('click', function (event) {
+                    event.preventDefault();
+
+                    const targetId = button.getAttribute('data-target');
+                    const input = document.getElementById(targetId);
+                    const preview = document.querySelector('[data-preview-for="' + targetId + '"]');
+                    const previewImage = preview ? preview.querySelector('img') : null;
+
+                    frame = wp.media({
+                        title: 'Selecionar imagem',
+                        button: {
+                            text: 'Usar esta imagem'
+                        },
+                        multiple: false
+                    });
+
+                    frame.on('select', function () {
+                        const attachment = frame.state().get('selection').first().toJSON();
+                        const imageUrl = attachment.sizes && attachment.sizes.medium ? attachment.sizes.medium.url : attachment.url;
+
+                        input.value = attachment.id;
+
+                        if (preview && previewImage) {
+                            previewImage.src = imageUrl;
+                            preview.style.display = 'block';
+                        }
+                    });
+
+                    frame.open();
+                });
+            });
+
+            document.querySelectorAll('.mktpd-media-remove').forEach(function (button) {
+                button.addEventListener('click', function (event) {
+                    event.preventDefault();
+
+                    const targetId = button.getAttribute('data-target');
+                    const input = document.getElementById(targetId);
+                    const preview = document.querySelector('[data-preview-for="' + targetId + '"]');
+                    const previewImage = preview ? preview.querySelector('img') : null;
+
+                    input.value = '';
+
+                    if (preview && previewImage) {
+                        previewImage.src = '';
+                        preview.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+    <?php
+}
+add_action('admin_footer-post.php', 'mktpd_qsomos_media_selector_script');
+add_action('admin_footer-post-new.php', 'mktpd_qsomos_media_selector_script');
 
 function mktpd_save_qsomos_content($post_id) {
     if (!isset($_POST['mktpd_qsomos_content_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['mktpd_qsomos_content_nonce'])), 'mktpd_save_qsomos_content')) {
@@ -387,6 +502,7 @@ function mktpd_save_qsomos_content($post_id) {
 
     $checkbox_fields = array();
     $url_fields      = array();
+    $image_fields    = array();
     $textarea_fields = array();
     $text_fields     = array();
 
@@ -396,6 +512,8 @@ function mktpd_save_qsomos_content($post_id) {
                 $checkbox_fields[] = $field_id;
             } elseif ($field['type'] === 'url') {
                 $url_fields[] = $field_id;
+            } elseif ($field['type'] === 'image') {
+                $image_fields[] = $field_id;
             } elseif ($field['type'] === 'textarea') {
                 $textarea_fields[] = $field_id;
             } else {
@@ -419,6 +537,16 @@ function mktpd_save_qsomos_content($post_id) {
     foreach ($url_fields as $field_id) {
         if (isset($_POST[$field_id])) {
             update_post_meta($post_id, $field_id, esc_url_raw(wp_unslash($_POST[$field_id])));
+        }
+    }
+
+    foreach ($image_fields as $field_id) {
+        $value = isset($_POST[$field_id]) ? absint(wp_unslash($_POST[$field_id])) : 0;
+
+        if ($value > 0) {
+            update_post_meta($post_id, $field_id, $value);
+        } else {
+            delete_post_meta($post_id, $field_id);
         }
     }
 

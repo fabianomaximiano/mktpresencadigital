@@ -52,6 +52,12 @@ $qsomos_id   = $qsomos_post ? $qsomos_post->ID : 0;
 $hero_eyebrow = mktpd_qsomos_meta($qsomos_id, 'mktpd_qsomos_hero_eyebrow', 'MKT Presença Digital');
 $hero_title   = mktpd_qsomos_meta($qsomos_id, 'mktpd_qsomos_hero_title', $qsomos_post ? get_the_title($qsomos_post) : 'Quem Somos');
 $hero_text    = mktpd_qsomos_meta($qsomos_id, 'mktpd_qsomos_hero_description', 'Construímos presença digital para pequenos negócios que precisam aparecer melhor, transmitir confiança e transformar visitas em oportunidades reais.');
+$hero_image_id  = absint(mktpd_qsomos_meta($qsomos_id, 'mktpd_qsomos_hero_image_id', 0));
+$hero_image     = $hero_image_id ? wp_get_attachment_image_url($hero_image_id, 'full') : '';
+
+if (!$hero_image) {
+    $hero_image = get_theme_mod('mktpd_home_hero_image', '');
+}
 
 $about_eyebrow = mktpd_qsomos_meta($qsomos_id, 'mktpd_qsomos_about_eyebrow', 'Nossa essência');
 $about_title   = mktpd_qsomos_meta($qsomos_id, 'mktpd_qsomos_about_title', 'Estratégia, foco e resultados para sua empresa crescer no digital.');
@@ -147,6 +153,24 @@ $values = array(
     ),
 );
 
+$why_eyebrow = mktpd_qsomos_meta($qsomos_id, 'mktpd_qsomos_why_eyebrow', 'Por que escolher a MKT Presença Digital?');
+$why_title   = mktpd_qsomos_meta($qsomos_id, 'mktpd_qsomos_why_title', 'Três motivos para sua empresa dar o próximo passo no digital.');
+
+$why_cards = array(
+    array(
+        'title' => mktpd_qsomos_meta($qsomos_id, 'mktpd_qsomos_why_1_title', 'Atendimento próximo'),
+        'text'  => mktpd_qsomos_meta($qsomos_id, 'mktpd_qsomos_why_1_text', 'Falamos a linguagem do pequeno negócio.'),
+    ),
+    array(
+        'title' => mktpd_qsomos_meta($qsomos_id, 'mktpd_qsomos_why_2_title', 'Soluções sob medida'),
+        'text'  => mktpd_qsomos_meta($qsomos_id, 'mktpd_qsomos_why_2_text', 'Nada de pacotes engessados.'),
+    ),
+    array(
+        'title' => mktpd_qsomos_meta($qsomos_id, 'mktpd_qsomos_why_3_title', 'Foco em resultado'),
+        'text'  => mktpd_qsomos_meta($qsomos_id, 'mktpd_qsomos_why_3_text', 'Sites que ajudam a vender e fortalecer a presença digital.'),
+    ),
+);
+
 $cta_enabled = mktpd_qsomos_meta($qsomos_id, 'mktpd_qsomos_cta_enabled', '1');
 $cta_eyebrow = mktpd_qsomos_meta($qsomos_id, 'mktpd_qsomos_cta_eyebrow', 'Próximo passo');
 $cta_title   = mktpd_qsomos_meta($qsomos_id, 'mktpd_qsomos_cta_title', 'Sua empresa está sendo encontrada no Google?');
@@ -159,6 +183,10 @@ get_header();
 
 <main class="qs-page" id="conteudo-principal">
     <section class="qs-hero">
+        <?php if (!empty($hero_image)) : ?>
+            <img class="qs-hero-bg" src="<?php echo esc_url($hero_image); ?>" alt="" aria-hidden="true">
+        <?php endif; ?>
+
         <div class="qs-hero-shape qs-hero-shape-one" aria-hidden="true"></div>
         <div class="qs-hero-shape qs-hero-shape-two" aria-hidden="true"></div>
 
@@ -283,6 +311,28 @@ get_header();
                         </div>
                     <?php endforeach; ?>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="qs-section qs-why">
+        <div class="qs-container">
+            <div class="qs-section-heading">
+                <?php if (!empty($why_eyebrow)) : ?>
+                    <span class="qs-eyebrow"><?php echo esc_html($why_eyebrow); ?></span>
+                <?php endif; ?>
+
+                <h2><?php echo esc_html($why_title); ?></h2>
+            </div>
+
+            <div class="qs-why-grid">
+                <?php foreach ($why_cards as $why_card) : ?>
+                    <article class="qs-why-card">
+                        <span class="qs-why-icon" aria-hidden="true">✓</span>
+                        <h3><?php echo esc_html($why_card['title']); ?></h3>
+                        <p><?php echo esc_html($why_card['text']); ?></p>
+                    </article>
+                <?php endforeach; ?>
             </div>
         </div>
     </section>
