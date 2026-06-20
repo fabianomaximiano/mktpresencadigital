@@ -39,3 +39,11 @@ wp-content/uploads/wpforms/cache/
 # ======================================================
 !wp-content/uploads/2026/
 !wp-content/uploads/2026/06/
+
+# Miniaturas do WordPress
+*-150x150.*
+*-300x*
+*-768x*
+*-1024x*
+*-1536x*
+*-2048x*
