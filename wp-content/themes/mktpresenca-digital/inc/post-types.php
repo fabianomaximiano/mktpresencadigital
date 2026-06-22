@@ -7,6 +7,99 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+/**
+ * Menu administrativo agrupado do tema.
+ */
+function mktpd_register_presence_admin_menu() {
+    add_menu_page(
+        'Presença Digital',
+        'Presença Digital',
+        'edit_posts',
+        'mktpd-presenca-digital',
+        'mktpd_render_presence_admin_page',
+        'dashicons-megaphone',
+        20
+    );
+
+    add_submenu_page(
+        'mktpd-presenca-digital',
+        'Visão Geral',
+        'Visão Geral',
+        'edit_posts',
+        'mktpd-presenca-digital',
+        'mktpd_render_presence_admin_page'
+    );
+
+    add_submenu_page(
+        'mktpd-presenca-digital',
+        'Serviços',
+        'Serviços',
+        'edit_pages',
+        'mktpd-servicos-page',
+        'mktpd_render_services_admin_redirect_page'
+    );
+}
+add_action('admin_menu', 'mktpd_register_presence_admin_menu');
+
+function mktpd_render_presence_admin_page() {
+    ?>
+    <div class="wrap">
+        <h1>Presença Digital</h1>
+        <p>Gerencie os principais conteúdos institucionais do tema MKT Presença Digital.</p>
+        <ul>
+            <li><strong>Quem Somos:</strong> conteúdo institucional da página Quem Somos.</li>
+            <li><strong>Serviços:</strong> conteúdo administrável da página Serviços.</li>
+            <li><strong>Projetos:</strong> cases e projetos apresentados no site.</li>
+        </ul>
+    </div>
+    <?php
+}
+
+function mktpd_get_services_page_admin_url() {
+    $pages = get_posts(array(
+        'post_type'      => 'page',
+        'post_status'    => array('publish', 'draft', 'pending', 'private'),
+        'posts_per_page' => 1,
+        'meta_key'       => '_wp_page_template',
+        'meta_value'     => 'servicos.php',
+        'fields'         => 'ids',
+    ));
+
+    if (!empty($pages)) {
+        return get_edit_post_link((int) $pages[0], 'raw');
+    }
+
+    $page = get_page_by_path('servicos');
+
+    if ($page) {
+        return get_edit_post_link((int) $page->ID, 'raw');
+    }
+
+    return '';
+}
+
+function mktpd_render_services_admin_redirect_page() {
+    $services_url = mktpd_get_services_page_admin_url();
+
+    if ($services_url) {
+        wp_safe_redirect($services_url);
+        exit;
+    }
+    ?>
+    <div class="wrap">
+        <h1>Serviços</h1>
+        <p>Nenhuma página usando o template <strong>Serviços</strong> foi encontrada.</p>
+        <p>Crie uma página, atribua o template <strong>Serviços</strong> e publique com o slug <strong>servicos</strong>.</p>
+        <p>
+            <a class="button button-primary" href="<?php echo esc_url(admin_url('post-new.php?post_type=page')); ?>">
+                Criar página Serviços
+            </a>
+        </p>
+    </div>
+    <?php
+}
+
+
 function mktpd_register_project_post_type() {
     $labels = array(
         'name'                  => 'Projetos',
@@ -33,7 +126,7 @@ function mktpd_register_project_post_type() {
         'description'        => 'Projetos e cases de presença digital.',
         'public'             => true,
         'show_ui'            => true,
-        'show_in_menu'       => true,
+        'show_in_menu'       => 'mktpd-presenca-digital',
         'menu_position'      => 21,
         'menu_icon'          => 'dashicons-portfolio',
         'show_in_rest'       => true,
@@ -193,13 +286,16 @@ function mktpd_register_qsomos_post_type() {
         'description'         => 'Conteúdo dinâmico da página Quem Somos.',
         'public'              => true,
         'show_ui'             => true,
-        'show_in_menu'        => true,
+        'show_in_menu'        => 'mktpd-presenca-digital',
         'menu_position'       => 22,
         'menu_icon'           => 'dashicons-id-alt',
         'show_in_rest'        => false,
         'has_archive'         => false,
         'publicly_queryable'  => true,
         'exclude_from_search' => true,
+        // 'rewrite'             => array(
+        //                                 'slug' => 'quem-somos',
+        //                                 'with_front' => false,
         'rewrite'             => false,
         'supports'            => array('thumbnail', 'page-attributes', 'revisions'),
     );

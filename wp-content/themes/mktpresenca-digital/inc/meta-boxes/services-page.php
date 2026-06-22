@@ -33,6 +33,7 @@ function mktpd_render_services_image_field($data, $key, $label)
         <button type="button" class="button mktpd-services-select-image">Selecionar imagem</button>
         <button type="button" class="button mktpd-services-remove-image">Remover</button>
     </p>
+
     <div class="mktpd-services-image-preview" style="margin-bottom:20px;">
         <?php if ($image_url) : ?>
             <img src="<?php echo esc_url($image_url); ?>" style="max-width:220px;height:auto;border-radius:8px;">
@@ -52,7 +53,37 @@ function mktpd_render_services_meta_box($post)
 
     $data = get_post_meta($post->ID, '_mktpd_services_page', true);
     $data = is_array($data) ? $data : array();
+
+    $default_faqs = array(
+        array(
+            'question' => 'Meu Instagram já vende. Preciso mesmo de um site?',
+            'answer'   => 'O Instagram ajuda, mas não substitui um site. Redes sociais mudam regras e alcance. O site é seu espaço próprio, fortalece autoridade e ajuda sua empresa a ser encontrada no Google.',
+        ),
+        array(
+            'question' => 'Facebook morreu?',
+            'answer'   => 'Não. O Facebook ainda faz parte do ecossistema digital, principalmente em campanhas, presença local e relacionamento. O ponto é usar cada canal com estratégia.',
+        ),
+        array(
+            'question' => 'A inteligência artificial cria sites em minutos. Por que contratar uma empresa?',
+            'answer'   => 'A IA pode ajudar, mas não substitui estratégia, performance, SEO, experiência, segurança e visão comercial. Um site não deve apenas existir; ele precisa gerar confiança e oportunidades.',
+        ),
+        array(
+            'question' => 'Um site sozinho vende?',
+            'answer'   => 'Não. O site é uma peça da estratégia. Ele precisa trabalhar junto com SEO, Google Meu Negócio, conteúdo, avaliações e canais de relacionamento.',
+        ),
+        array(
+            'question' => 'Vale mais investir em anúncios?',
+            'answer'   => 'Anúncios podem gerar resultado rápido, mas presença digital constrói autoridade no longo prazo. O ideal é combinar estratégia orgânica com ações pagas quando fizer sentido.',
+        ),
+    );
     ?>
+
+    <p>
+        Preencha os blocos abaixo na mesma ordem em que aparecem na página.
+        Os campos vazios usam o conteúdo padrão do template.
+    </p>
+
+    <hr>
 
     <h2>Hero</h2>
 
@@ -71,7 +102,62 @@ function mktpd_render_services_meta_box($post)
         <textarea name="mktpd_services[hero_text]" rows="4" class="widefat"><?php echo esc_textarea(mktpd_services_get_field($data, 'hero_text', 'Estratégias, sites, SEO, Google Meu Negócio e performance para ajudar pequenas empresas a serem encontradas, lembradas e escolhidas.')); ?></textarea>
     </p>
 
+    <p>
+        <label><strong>Texto do botão 1</strong></label><br>
+        <input type="text" name="mktpd_services[hero_button_1]" value="<?php echo esc_attr(mktpd_services_get_field($data, 'hero_button_1', 'Conhecer serviços')); ?>" class="widefat">
+    </p>
+
+    <p>
+        <label><strong>Texto do botão 2</strong></label><br>
+        <input type="text" name="mktpd_services[hero_button_2]" value="<?php echo esc_attr(mktpd_services_get_field($data, 'hero_button_2', 'Solicitar diagnóstico')); ?>" class="widefat">
+    </p>
+
     <?php mktpd_render_services_image_field($data, 'hero_image_id', 'Imagem de fundo da Hero'); ?>
+
+    <hr>
+
+    <h2>Introdução</h2>
+
+    <p>
+        <label><strong>Chamada superior</strong></label><br>
+        <input type="text" name="mktpd_services[intro_eyebrow]" value="<?php echo esc_attr(mktpd_services_get_field($data, 'intro_eyebrow', 'Presença digital na prática')); ?>" class="widefat">
+    </p>
+
+    <p>
+        <label><strong>Título da Introdução</strong></label><br>
+        <textarea name="mktpd_services[intro_title]" rows="3" class="widefat"><?php echo esc_textarea(mktpd_services_get_field($data, 'intro_title', 'Mais do que ter um site. É ser encontrado, lembrado e escolhido.')); ?></textarea>
+    </p>
+
+    <p>
+        <label><strong>Texto 1</strong></label><br>
+        <textarea name="mktpd_services[intro_text_1]" rows="4" class="widefat"><?php echo esc_textarea(mktpd_services_get_field($data, 'intro_text_1', 'Presença digital é o conjunto de canais, estratégias e experiências que fazem sua empresa aparecer da maneira certa para as pessoas certas.')); ?></textarea>
+    </p>
+
+    <p>
+        <label><strong>Texto 2</strong></label><br>
+        <textarea name="mktpd_services[intro_text_2]" rows="4" class="widefat"><?php echo esc_textarea(mktpd_services_get_field($data, 'intro_text_2', 'Site, Google, avaliações, SEO, redes sociais, velocidade e conteúdo precisam trabalhar juntos para gerar confiança e oportunidades reais.')); ?></textarea>
+    </p>
+
+    <h3>Itens da presença digital</h3>
+
+    <?php
+    $presence_defaults = array(
+        'Site profissional',
+        'SEO local',
+        'Google Meu Negócio',
+        'Performance',
+        'Conteúdo',
+        'Conversão',
+    );
+
+    for ($i = 1; $i <= 6; $i++) :
+        $default_item = isset($presence_defaults[$i - 1]) ? $presence_defaults[$i - 1] : '';
+        ?>
+        <p>
+            <label><strong>Item <?php echo esc_html($i); ?></strong></label><br>
+            <input type="text" name="mktpd_services[presence_item_<?php echo esc_attr($i); ?>]" value="<?php echo esc_attr(mktpd_services_get_field($data, "presence_item_{$i}", $default_item)); ?>" class="widefat">
+        </p>
+    <?php endfor; ?>
 
     <hr>
 
@@ -107,6 +193,16 @@ function mktpd_render_services_meta_box($post)
 
     <h2>Indicadores</h2>
 
+    <p>
+        <label><strong>Chamada superior</strong></label><br>
+        <input type="text" name="mktpd_services[metrics_eyebrow]" value="<?php echo esc_attr(mktpd_services_get_field($data, 'metrics_eyebrow', 'O que poucas empresas mostram')); ?>" class="widefat">
+    </p>
+
+    <p>
+        <label><strong>Título</strong></label><br>
+        <textarea name="mktpd_services[metrics_title]" rows="3" class="widefat"><?php echo esc_textarea(mktpd_services_get_field($data, 'metrics_title', 'Performance também é parte da presença digital.')); ?></textarea>
+    </p>
+
     <?php for ($i = 1; $i <= 4; $i++) : ?>
         <h3>Indicador <?php echo esc_html($i); ?></h3>
 
@@ -121,9 +217,24 @@ function mktpd_render_services_meta_box($post)
         </p>
     <?php endfor; ?>
 
+    <p>
+        <label><strong>Frase / citação</strong></label><br>
+        <textarea name="mktpd_services[metrics_quote]" rows="3" class="widefat"><?php echo esc_textarea(mktpd_services_get_field($data, 'metrics_quote', 'Performance sem conteúdo é invisibilidade. Conteúdo sem performance é desperdício.')); ?></textarea>
+    </p>
+
     <hr>
 
     <h2>Metodologia</h2>
+
+    <p>
+        <label><strong>Chamada superior</strong></label><br>
+        <input type="text" name="mktpd_services[process_eyebrow]" value="<?php echo esc_attr(mktpd_services_get_field($data, 'process_eyebrow', 'Metodologia')); ?>" class="widefat">
+    </p>
+
+    <p>
+        <label><strong>Título</strong></label><br>
+        <textarea name="mktpd_services[process_title]" rows="3" class="widefat"><?php echo esc_textarea(mktpd_services_get_field($data, 'process_title', 'Como transformamos presença digital em resultados.')); ?></textarea>
+    </p>
 
     <?php for ($i = 1; $i <= 3; $i++) : ?>
         <h3>Etapa <?php echo esc_html($i); ?></h3>
@@ -146,7 +257,47 @@ function mktpd_render_services_meta_box($post)
 
     <hr>
 
+    <h2>FAQ</h2>
+
+    <p>
+        <label><strong>Chamada superior</strong></label><br>
+        <input type="text" name="mktpd_services[faq_eyebrow]" value="<?php echo esc_attr(mktpd_services_get_field($data, 'faq_eyebrow', 'Dúvidas frequentes')); ?>" class="widefat">
+    </p>
+
+    <p>
+        <label><strong>Título</strong></label><br>
+        <textarea name="mktpd_services[faq_title]" rows="3" class="widefat"><?php echo esc_textarea(mktpd_services_get_field($data, 'faq_title', 'Perguntas que muitos empresários fazem antes de investir.')); ?></textarea>
+    </p>
+
+    <p>Cadastre até 10 perguntas e respostas. Campos vazios não aparecem no front-end.</p>
+
+    <?php for ($i = 1; $i <= 10; $i++) : ?>
+        <?php
+        $default_question = isset($default_faqs[$i - 1]) ? $default_faqs[$i - 1]['question'] : '';
+        $default_answer = isset($default_faqs[$i - 1]) ? $default_faqs[$i - 1]['answer'] : '';
+        ?>
+
+        <h3>Pergunta <?php echo esc_html($i); ?></h3>
+
+        <p>
+            <label><strong>Pergunta</strong></label><br>
+            <input type="text" name="mktpd_services[faq_<?php echo esc_attr($i); ?>_question]" value="<?php echo esc_attr(mktpd_services_get_field($data, "faq_{$i}_question", $default_question)); ?>" class="widefat">
+        </p>
+
+        <p>
+            <label><strong>Resposta</strong></label><br>
+            <textarea name="mktpd_services[faq_<?php echo esc_attr($i); ?>_answer]" rows="4" class="widefat"><?php echo esc_textarea(mktpd_services_get_field($data, "faq_{$i}_answer", $default_answer)); ?></textarea>
+        </p>
+    <?php endfor; ?>
+
+    <hr>
+
     <h2>CTA Final</h2>
+
+    <p>
+        <label><strong>Chamada superior</strong></label><br>
+        <input type="text" name="mktpd_services[cta_eyebrow]" value="<?php echo esc_attr(mktpd_services_get_field($data, 'cta_eyebrow', 'MKT Presença Digital')); ?>" class="widefat">
+    </p>
 
     <p>
         <label><strong>Título</strong></label><br>
@@ -155,7 +306,7 @@ function mktpd_render_services_meta_box($post)
 
     <p>
         <label><strong>Texto</strong></label><br>
-        <textarea name="mktpd_services[cta_text]" rows="4" class="widefat"><?php echo esc_textarea(mktpd_services_get_field($data, 'cta_text')); ?></textarea>
+        <textarea name="mktpd_services[cta_text]" rows="4" class="widefat"><?php echo esc_textarea(mktpd_services_get_field($data, 'cta_text', 'Entenda onde sua empresa está hoje e quais melhorias podem gerar mais visibilidade, confiança e oportunidades.')); ?></textarea>
     </p>
 
     <p>
@@ -236,13 +387,18 @@ function mktpd_save_services_meta_box($post_id)
             continue;
         }
 
-        if (str_contains($key, '_text') || str_contains($key, '_title')) {
-            $clean[$key] = sanitize_textarea_field($value);
+        if (str_contains($key, '_url')) {
+            $clean[$key] = esc_url_raw($value);
             continue;
         }
 
-        if (str_contains($key, '_url')) {
-            $clean[$key] = esc_url_raw($value);
+        if (
+            str_contains($key, '_text') ||
+            str_contains($key, '_title') ||
+            str_contains($key, '_answer') ||
+            str_contains($key, '_quote')
+        ) {
+            $clean[$key] = sanitize_textarea_field($value);
             continue;
         }
 

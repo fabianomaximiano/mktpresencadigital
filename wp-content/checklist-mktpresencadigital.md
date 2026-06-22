@@ -181,3 +181,20 @@ Refatoração completa do site e criação de tema próprio WordPress.
 * [ ] Publicar produção
 * [ ] Revisar Search Console
 * [ ] Revisar Google Meu Negócio
+
+---
+
+## SEO e Estrutura Global
+
+- [ ] feature/breadcrumb-global
+  - Prioridade: Média
+  - Impacto SEO: Alto
+  - Tempo estimado: 1 hora
+  - Objetivo:
+    Implementar breadcrumb dinâmico reutilizável em todas as páginas internas.
+
+- [ ] Open Graph global
+- [ ] Twitter Cards
+- [ ] Schema.org
+- [ ] Sitemap XML
+- [ ] Search Console
