@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * Template Name: Serviços
  * Description: Página Serviços MKT Presença Digital.
@@ -16,39 +16,16 @@ $post_id = get_the_ID();
 $data = get_post_meta($post_id, '_mktpd_services_page', true);
 $data = is_array($data) ? $data : array();
 
-function mktpd_service_value($data, $key, $default = '')
-{
+function mktpd_service_value($data, $key, $default = '') {
     return isset($data[$key]) && $data[$key] !== '' ? $data[$key] : $default;
 }
-
-$hero_image_id  = absint(mktpd_service_value($data, 'hero_image_id', 0));
-$hero_image_url = $hero_image_id ? wp_get_attachment_image_url($hero_image_id, 'full') : '';
 ?>
 
 <main class="services-page">
 
     <section class="services-hero">
-
-        <?php if ($hero_image_url) : ?>
-            <img
-                class="services-hero-bg"
-                src="<?php echo esc_url($hero_image_url); ?>"
-                alt=""
-                aria-hidden="true"
-            >
-        <?php endif; ?>
-
         <div class="services-container">
-
-            <div class="services-breadcrumb">
-                <span class="services-eyebrow">
-                    <?php echo esc_html(mktpd_service_value($data, 'hero_eyebrow', 'Serviços')); ?>
-                </span>
-
-                <a href="<?php echo esc_url(home_url('/')); ?>">Home</a>
-                <span>/</span>
-                <span><?php the_title(); ?></span>
-            </div>
+            <span class="services-eyebrow"><?php echo esc_html(mktpd_service_value($data, 'hero_eyebrow', 'Serviços')); ?></span>
 
             <h1><?php echo esc_html(mktpd_service_value($data, 'hero_title', 'Soluções digitais para fortalecer sua presença e gerar resultados.')); ?></h1>
 
@@ -58,7 +35,6 @@ $hero_image_url = $hero_image_id ? wp_get_attachment_image_url($hero_image_id, '
                 <a href="#servicos" class="services-btn services-btn-primary">
                     <?php echo esc_html(mktpd_service_value($data, 'hero_button_1', 'Conhecer serviços')); ?>
                 </a>
-
                 <a href="#diagnostico" class="services-btn services-btn-secondary">
                     <?php echo esc_html(mktpd_service_value($data, 'hero_button_2', 'Solicitar diagnóstico')); ?>
                 </a>
@@ -91,10 +67,6 @@ $hero_image_url = $hero_image_id ? wp_get_attachment_image_url($hero_image_id, '
 
                 foreach ($presence_items as $index => $default_item) :
                     $item = mktpd_service_value($data, 'presence_item_' . ($index + 1), $default_item);
-
-                    if (empty($item)) {
-                        continue;
-                    }
                     ?>
                     <div class="presence-item"><?php echo esc_html($item); ?></div>
                 <?php endforeach; ?>
@@ -122,19 +94,9 @@ $hero_image_url = $hero_image_id ? wp_get_attachment_image_url($hero_image_id, '
                 foreach ($cards as $i => $card) :
                     $num = $i + 1;
                     $extra_class = $num === 5 ? ' service-card-wide' : '';
-                    $service_image_id = absint(mktpd_service_value($data, "service_{$num}_image_id", 0));
-                    $service_image_url = $service_image_id ? wp_get_attachment_image_url($service_image_id, 'large') : '';
-                    $service_image_style = '';
-
-                    if ($service_image_url) {
-                        $service_image_style = sprintf(
-                            "background-image: linear-gradient(135deg, rgba(13,15,20,.76), rgba(13,15,20,.92)), url('%s');",
-                            esc_url($service_image_url)
-                        );
-                    }
                     ?>
                     <article class="service-card<?php echo esc_attr($extra_class); ?>">
-                        <div class="service-card-image service-<?php echo esc_attr($card[0]); ?>"<?php echo $service_image_style ? ' style="' . esc_attr($service_image_style) . '"' : ''; ?>>
+                        <div class="service-card-image service-<?php echo esc_attr($card[0]); ?>">
                             <span><?php echo esc_html(mktpd_service_value($data, "service_{$num}_badge", $card[1])); ?></span>
                             <small><?php echo esc_html(mktpd_service_value($data, "service_{$num}_label", $card[2])); ?></small>
                         </div>
@@ -145,6 +107,95 @@ $hero_image_url = $hero_image_id ? wp_get_attachment_image_url($hero_image_id, '
                     </article>
                 <?php endforeach; ?>
             </div>
+
+            <div class="services-heading services-heading-center services-all-heading">
+                <span class="services-eyebrow-dark">Todos os serviços</span>
+                <h2>Conheça a lista completa de serviços disponíveis.</h2>
+                <p>Além das soluções principais, cada serviço pode ser combinado de acordo com o momento e a necessidade da sua empresa.</p>
+            </div>
+
+            <div class="services-all-cta">
+                <a class="services-btn services-btn-primary" href="#todos-os-servicos">
+                    Ver todos os serviços
+                </a>
+            </div>
+
+            <?php
+            $all_services = new WP_Query(array(
+                'post_type'      => 'servicos',
+                'posts_per_page' => -1,
+                'post_status'    => 'publish',
+                'orderby'        => array(
+                    'menu_order' => 'ASC',
+                    'title'      => 'ASC',
+                ),
+                'meta_query'     => array(
+                    'relation' => 'OR',
+                    array(
+                        'key'     => 'mktpd_service_show_services_page',
+                        'value'   => '1',
+                        'compare' => '=',
+                    ),
+                    array(
+                        'key'     => 'mktpd_service_show_services_page',
+                        'compare' => 'NOT EXISTS',
+                    ),
+                ),
+            ));
+            ?>
+
+            <?php if ($all_services->have_posts()) : ?>
+                <div id="todos-os-servicos" class="services-grid">
+                    <?php while ($all_services->have_posts()) : ?>
+                        <?php
+                        $all_services->the_post();
+
+                        $service_id      = get_the_ID();
+                        $service_badge   = get_post_meta($service_id, 'mktpd_service_card_badge', true);
+                        $service_label   = get_post_meta($service_id, 'mktpd_service_card_label', true);
+                        $service_summary = get_post_meta($service_id, 'mktpd_service_card_summary', true);
+                        $service_button  = get_post_meta($service_id, 'mktpd_service_card_button', true);
+
+                        if ($service_badge === '') {
+                            $service_badge = 'Web';
+                        }
+
+                        if ($service_label === '') {
+                            $service_label = 'Serviço';
+                        }
+
+                        if ($service_summary === '') {
+                            $service_summary = get_the_excerpt();
+                        }
+
+                        if ($service_button === '') {
+                            $service_button = 'Saiba mais';
+                        }
+                        ?>
+                        <article class="service-card">
+                            <div class="service-card-image service-performance">
+                                <span><?php echo esc_html($service_badge); ?></span>
+                                <small><?php echo esc_html($service_label); ?></small>
+                            </div>
+
+                            <div class="service-card-content">
+                                <h3><?php the_title(); ?></h3>
+
+                                <?php if ($service_summary !== '') : ?>
+                                    <p><?php echo esc_html($service_summary); ?></p>
+                                <?php endif; ?>
+
+                                <p class="services-card-link">
+                                    <a href="<?php the_permalink(); ?>">
+                                        <strong><?php echo esc_html($service_button); ?> →</strong>
+                                    </a>
+                                </p>
+                            </div>
+                        </article>
+                    <?php endwhile; ?>
+                </div>
+                <?php wp_reset_postdata(); ?>
+            <?php endif; ?>
         </div>
     </section>
 
@@ -223,25 +274,14 @@ $hero_image_url = $hero_image_id ? wp_get_attachment_image_url($hero_image_id, '
                     array('A inteligência artificial cria sites em minutos. Por que contratar uma empresa?', 'A IA pode ajudar, mas não substitui estratégia, performance, SEO, experiência, segurança e visão comercial. Um site não deve apenas existir; ele precisa gerar confiança e oportunidades.'),
                     array('Um site sozinho vende?', 'Não. O site é uma peça da estratégia. Ele precisa trabalhar junto com SEO, Google Meu Negócio, conteúdo, avaliações e canais de relacionamento.'),
                     array('Vale mais investir em anúncios?', 'Anúncios podem gerar resultado rápido, mas presença digital constrói autoridade no longo prazo. O ideal é combinar estratégia orgânica com ações pagas quando fizer sentido.'),
-                    array('', ''),
-                    array('', ''),
-                    array('', ''),
-                    array('', ''),
-                    array('', ''),
                 );
 
                 foreach ($faqs as $i => $faq) :
                     $num = $i + 1;
-                    $question = mktpd_service_value($data, "faq_{$num}_question", $faq[0]);
-                    $answer = mktpd_service_value($data, "faq_{$num}_answer", $faq[1]);
-
-                    if (empty($question) || empty($answer)) {
-                        continue;
-                    }
                     ?>
                     <details>
-                        <summary><?php echo esc_html($question); ?></summary>
-                        <p><?php echo esc_html($answer); ?></p>
+                        <summary><?php echo esc_html(mktpd_service_value($data, "faq_{$num}_question", $faq[0])); ?></summary>
+                        <p><?php echo esc_html(mktpd_service_value($data, "faq_{$num}_answer", $faq[1])); ?></p>
                     </details>
                 <?php endforeach; ?>
             </div>

@@ -78,13 +78,12 @@ function mktpd_service_item_render_image_field($post_id, $key, $label, $descript
         <?php if ($key === 'mktpd_service_hero_image_id') : ?>
             <div style="background:#f7f8fa;border-left:4px solid #f5a623;padding:14px 18px;margin:12px 0 16px;border-radius:6px;">
                 <strong>Imagem de fundo da Hero</strong><br>
-                Utilize uma imagem horizontal com boa área livre para o texto.
-
-                <ul style="margin:10px 0 0 18px;list-style:disc;">
+                Use esta imagem como background da página interna do serviço.
+                <ul style="margin:10px 0 0 18px;">
                     <li><strong>Dimensão recomendada:</strong> 1920 x 900 px</li>
                     <li><strong>Formato:</strong> WebP</li>
                     <li><strong>Peso ideal:</strong> até 250 KB</li>
-                    <li><strong>Dica:</strong> evite imagens muito poluídas, pois a hero usa overlay escuro e texto sobreposto.</li>
+                    <li><strong>Dica:</strong> prefira imagens horizontais com boa área livre para overlay escuro e leitura do título.</li>
                 </ul>
             </div>
         <?php elseif ($description) : ?>
@@ -110,7 +109,7 @@ function mktpd_service_item_render_meta_box($post) {
     ?>
 
     <p>
-        Preencha os campos abaixo para montar a página interna do serviço. O título do post será usado como nome principal e a imagem destacada pode ser usada nos cards da Home e da página Serviços.
+        Preencha os campos abaixo para montar a página interna do serviço. O título do serviço será usado como nome principal. A imagem destacada do WordPress será usada nos cards da Home e da página Serviços.
     </p>
 
     <hr>
@@ -196,7 +195,7 @@ function mktpd_service_item_render_meta_box($post) {
         $post->ID,
         'mktpd_service_hero_image_id',
         'Imagem de fundo da Hero',
-        'Imagem usada como background da hero da página interna do serviço.'
+        'Opcional. Se não preencher, a página usará o fundo escuro padrão.'
     );
     ?>
 

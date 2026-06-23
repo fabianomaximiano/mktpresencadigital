@@ -250,6 +250,7 @@ a {
 .services-heading {
     max-width: 760px;
     margin-bottom: 54px;
+    margin-top: 100px;
 }
 
 .services-heading-center {
@@ -598,6 +599,10 @@ a {
     text-transform: uppercase;
 }
 
+.services-all-heading{
+    padding: 20px 0px;
+}
+
 .services-cta-card h2 {
     max-width: 760px;
     margin: 0 auto 18px;
@@ -615,6 +620,33 @@ a {
     font-size: 18px;
     line-height: 1.75;
 }
+
+/* ==========================================================
+   TODOS OS SERVIÇOS
+========================================================== */
+
+.services-all {
+    padding-top: 110px;
+}
+
+.services-all .services-heading {
+    max-width: 820px;
+    margin: 0 auto 40px;
+    text-align: center;
+}
+
+.services-all .services-heading p {
+    max-width: 720px;
+    margin: 18px auto 0;
+}
+
+.services-all-cta {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+
 
 @media (max-width: 980px) {
     .services-intro-grid {
