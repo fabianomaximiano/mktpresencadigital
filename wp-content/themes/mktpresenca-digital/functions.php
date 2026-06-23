@@ -8,3 +8,4 @@ require_once get_template_directory() . '/inc/customizer.php';
 
 require_once get_template_directory() . '/inc/meta-boxes/about-page.php';
 require_once get_template_directory() . '/inc/meta-boxes/services-page.php';
+require_once get_template_directory() . '/inc/meta-boxes/service-item.php';

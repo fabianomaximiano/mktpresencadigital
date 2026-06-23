@@ -259,6 +259,53 @@ function mktpd_save_project_details($post_id) {
 add_action('save_post_projetos', 'mktpd_save_project_details');
 
 /**
+ * CPT Serviços.
+ */
+function mktpd_register_services_post_type() {
+    $labels = array(
+        'name'                  => 'Serviços',
+        'singular_name'         => 'Serviço',
+        'menu_name'             => 'Serviços',
+        'name_admin_bar'        => 'Serviço',
+        'add_new'               => 'Adicionar novo',
+        'add_new_item'          => 'Adicionar novo serviço',
+        'new_item'              => 'Novo serviço',
+        'edit_item'             => 'Editar serviço',
+        'view_item'             => 'Ver serviço',
+        'all_items'             => 'Todos os serviços',
+        'search_items'          => 'Buscar serviços',
+        'not_found'             => 'Nenhum serviço encontrado',
+        'not_found_in_trash'    => 'Nenhum serviço encontrado na lixeira',
+        'featured_image'        => 'Imagem do card do serviço',
+        'set_featured_image'    => 'Definir imagem do card',
+        'remove_featured_image' => 'Remover imagem do card',
+        'use_featured_image'    => 'Usar como imagem do card',
+    );
+
+    $args = array(
+        'labels'              => $labels,
+        'description'         => 'Serviços oferecidos pela MKT Presença Digital.',
+        'public'              => true,
+        'show_ui'             => true,
+        'show_in_menu'        => true,
+        'menu_position'       => 23,
+        'menu_icon'           => 'dashicons-admin-tools',
+        'show_in_rest'        => false,
+        'has_archive'         => false,
+        'publicly_queryable'  => true,
+        'exclude_from_search' => false,
+        'rewrite'             => array(
+            'slug'       => 'servicos',
+            'with_front' => false,
+        ),
+        'supports'            => array('title', 'thumbnail', 'page-attributes', 'revisions'),
+    );
+
+    register_post_type('servicos', $args);
+}
+add_action('init', 'mktpd_register_services_post_type');
+
+/**
  * CPT Quem Somos.
  */
 function mktpd_register_qsomos_post_type() {
@@ -425,54 +472,3 @@ function mktpd_save_qsomos_details($post_id) {
 }
 add_action('save_post_qsomos', 'mktpd_save_qsomos_details');
 
-/**
- * CPT Serviços.
- */
-function mktpd_register_servicos_post_type() {
-    $labels = array(
-        'name'                  => 'Serviços',
-        'singular_name'         => 'Serviço',
-        'menu_name'             => 'Serviços',
-        'name_admin_bar'        => 'Serviço',
-        'add_new'               => 'Adicionar serviço',
-        'add_new_item'          => 'Adicionar novo serviço',
-        'new_item'              => 'Novo serviço',
-        'edit_item'             => 'Editar serviço',
-        'view_item'             => 'Ver serviço',
-        'all_items'             => 'Todos os serviços',
-        'search_items'          => 'Buscar serviços',
-        'not_found'             => 'Nenhum serviço encontrado',
-        'not_found_in_trash'    => 'Nenhum serviço encontrado na lixeira',
-        'featured_image'        => 'Imagem do card do serviço',
-        'set_featured_image'    => 'Definir imagem do card',
-        'remove_featured_image' => 'Remover imagem do card',
-        'use_featured_image'    => 'Usar como imagem do card',
-    );
-
-    $args = array(
-        'labels'              => $labels,
-        'description'         => 'Serviços oferecidos pela MKT Presença Digital.',
-        'public'              => true,
-        'show_ui'             => true,
-        'show_in_menu'        => true,
-        'menu_position'       => 23,
-        'menu_icon'           => 'dashicons-admin-tools',
-        'show_in_rest'        => false,
-        'has_archive'         => false,
-        'publicly_queryable'  => true,
-        'exclude_from_search' => false,
-        'rewrite'             => array(
-            'slug'       => 'servicos',
-            'with_front' => false,
-        ),
-        'supports'            => array(
-            'title',
-            'thumbnail',
-            'page-attributes',
-            'revisions',
-        ),
-    );
-
-    register_post_type('servicos', $args);
-}
-add_action('init', 'mktpd_register_servicos_post_type');

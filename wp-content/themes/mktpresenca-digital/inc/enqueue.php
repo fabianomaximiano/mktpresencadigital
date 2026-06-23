@@ -57,7 +57,17 @@ function mktpd_enqueue_assets() {
         array('mktpd-header'),
         '1.0.0'
     );
-}
+    
+    }
+    if (is_singular('servicos')) {
+    wp_enqueue_style(
+        'mktpd-single-servicos',
+        $theme_uri . '/assets/css/single-servicos.css',
+        array('mktpd-header'),
+        '1.0.0'
+    );
+    }
+    
     wp_enqueue_style(
         'mktpd-footer',
         $theme_uri . '/assets/css/footer.css',
