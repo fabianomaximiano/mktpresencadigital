@@ -42,24 +42,29 @@ Produzir conteúdo para:
 
 Apresentar os trabalhos realizados pela MKT Presença Digital utilizando uma linguagem comercial.
 
-O foco não é mostrar tecnologias utilizadas, mas sim:
+O foco é demonstrar:
 
 * problema identificado;
 * solução aplicada;
 * diferenciais do projeto;
-* fortalecimento da presença digital do cliente.
+* fortalecimento da presença digital do cliente;
+* resultados alcançados.
 
 ---
 
 ## Nome do CPT
 
+```text
 projetos
+```
 
 ---
 
 ## Taxonomia
 
+```text
 segmento
+```
 
 ---
 
@@ -71,7 +76,7 @@ Screenshot ou imagem representativa do projeto.
 
 ### Nome do projeto
 
-Exemplo:
+Exemplos:
 
 * ALCORP Contábil
 * Despachante Digital Flow
@@ -79,7 +84,7 @@ Exemplo:
 
 ### Segmento
 
-Exemplo:
+Exemplos:
 
 * Contabilidade
 * Despachante
@@ -96,55 +101,61 @@ Exemplo:
 
 ### Botão
 
+```text
 Ver Projeto
+```
 
 ---
 
-## Estrutura da Página Individual do Projeto
+# Estrutura da Página Individual do Projeto
 
-### Hero
+## Hero
 
-Imagem + nome da empresa.
-
----
-
-### Sobre o Cliente
-
-Breve apresentação da empresa.
+* Nome da empresa;
+* Segmento;
+* Ano do projeto;
+* Link do site;
+* Mockup desktop + mobile.
 
 ---
 
-### Desafio
+## Sobre o Cliente
+
+Breve apresentação da empresa e dos objetivos.
+
+---
+
+## Desafio
 
 Problemas encontrados antes do projeto.
 
 ---
 
-### Solução Aplicada
+## Solução Aplicada
 
 Como a presença digital foi reorganizada.
 
 ---
 
-### Diferenciais
+## Diferenciais
 
 Lista dos principais diferenciais implementados.
 
 ---
 
-### Galeria
+## Galeria
 
 Imagens do projeto.
 
 ---
 
-### Serviços Utilizados
+## Serviços Utilizados
 
 Lista dos serviços aplicados.
 
 ---
 
-### CTA Final
+## CTA Final
 
 Gostou deste projeto?
 
@@ -163,7 +174,8 @@ Foco em:
 * autoridade;
 * presença digital;
 * imagem profissional;
-* relacionamento com empresas.
+* relacionamento com empresas;
+* resultados.
 
 ---
 
@@ -176,7 +188,8 @@ Foco em:
 * desenvolvimento;
 * arquitetura;
 * tecnologias utilizadas;
-* bastidores dos projetos.
+* bastidores dos projetos;
+* performance.
 
 ---
 
@@ -185,3 +198,110 @@ Foco em:
 Os projetos são os mesmos nos dois sites.
 
 A diferença será apenas a forma como serão apresentados.
+
+---
+
+# Filosofia de Apresentação dos Projetos
+
+Não apresentamos apenas sites.
+
+Apresentamos a evolução digital dos nossos clientes.
+
+Cada projeto deve demonstrar:
+
+* o cenário inicial;
+* os problemas encontrados;
+* as soluções aplicadas;
+* os resultados alcançados;
+* a evolução contínua do negócio.
+
+---
+
+# Estrutura do Case
+
+## Sobre o Projeto
+
+Breve descrição da empresa e dos objetivos.
+
+---
+
+## Soluções Aplicadas
+
+* Site Institucional;
+* SEO Técnico;
+* Google Meu Negócio;
+* Performance Web;
+* Integrações;
+* Automações.
+
+---
+
+## Performance
+
+### PageSpeed Atual
+
+* Mobile;
+* Desktop;
+* SEO;
+* Acessibilidade;
+* Boas práticas.
+
+---
+
+## Google Meu Negócio
+
+### Antes
+
+* quantidade de avaliações;
+* nota média;
+* perfil incompleto.
+
+### Depois
+
+* quantidade atual;
+* nota média atual;
+* melhorias implementadas.
+
+---
+
+## Redes Sociais
+
+### Antes
+
+* frequência de publicação;
+* identidade visual;
+* ausência de estratégia.
+
+### Depois
+
+* nova identidade;
+* crescimento da presença digital;
+* integração com o site.
+
+---
+
+## Evolução Mensal
+
+Linha do tempo:
+
+* Mês 1 → implantação;
+* Mês 2 → SEO;
+* Mês 3 → Google Meu Negócio;
+* Mês 4 → Conteúdo;
+* Mês 5 → Melhorias.
+
+---
+
+## Resultados
+
+* aumento de visibilidade;
+* melhora no posicionamento;
+* fortalecimento da marca.
+
+---
+
+# Filosofia
+
+Não criamos apenas sites.
+
+Criamos sistemas de presença digital e crescimento para pequenas empresas.

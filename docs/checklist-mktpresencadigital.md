@@ -80,21 +80,27 @@ Refatoração completa do site e criação de tema próprio WordPress.
 
 ## Quem Somos
 
-- [ ] Revisar layout
+- [x] Revisar layout
 - [x] Criar template visual em laboratório
-- [ ] Tornar administrável
-- [ ] Transformar template em página real
+- [x] Tornar administrável
+- [x] Transformar template em página real
 
 ## Serviços
 
-* [ ] Revisar cards
-* [ ] Revisar ícones
+* [x] Revisar cards
+* [x] Revisar ícones
 * [ ] Tornar administrável
 
 ## Indicadores
 
 * [x] Tornar imagem administrável
-* [ ] Ajustar espaçamentos finais
+* [x] Ajustar espaçamentos finais
+
+## Validação Final da Home
+
+* [x] Desktop
+* [x] Tablet
+* [x] Mobile
 
 ## Cases
 
@@ -124,8 +130,8 @@ Refatoração completa do site e criação de tema próprio WordPress.
 
 - [ ] page.php
 - [ ] Template interno padrão
-- [ ] Página Sobre
-- [ ] Página Serviços
+- [x] Página Sobre
+- [x] Página Serviços
 - [ ] Página Contato
 - [ ] Página Orçamento
 
@@ -162,7 +168,8 @@ Refatoração completa do site e criação de tema próprio WordPress.
 
 ## CPT
 
-* [ ] Serviços
+* [x] Serviços
+* [x] Quem Somos
 * [ ] FAQ
 * [ ] Depoimentos
 * [ ] Projetos
